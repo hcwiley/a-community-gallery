@@ -1,5 +1,5 @@
-﻿Build started 7/28/2011 1:21:06 AM.
-     1>Project "C:\long_weekend\codes\CPP\SkeletalViewer.vcxproj" on node 2 (build target(s)).
+﻿Build started 10/27/2011 12:05:52 AM.
+     1>Project "C:\virtual-gallery\codes\CPP\SkeletalViewer.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\SkeletalViewer.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
@@ -8,26 +8,21 @@
          NuiImpl.cpp
      1>c:\opencv2.2\include\opencv2\flann\logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
-     1>c:\long_weekend\codes\cpp\nuiimpl.cpp(250): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(246): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\long_weekend\codes\cpp\nuiimpl.cpp(254): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(251): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(251): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(505): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(506): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\long_weekend\codes\cpp\nuiimpl.cpp(258): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\long_weekend\codes\cpp\nuiimpl.cpp(262): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\long_weekend\codes\cpp\nuiimpl.cpp(511): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\long_weekend\codes\cpp\nuiimpl.cpp(513): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\long_weekend\codes\cpp\nuiimpl.cpp(551): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\long_weekend\codes\cpp\nuiimpl.cpp(552): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\long_weekend\codes\cpp\nuiimpl.cpp(563): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(514): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(514): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
        ResourceCompile:
          All outputs are up-to-date.
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
-         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\long_weekend\codes\CPP\Debug\SkeletalViewer.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\..\unmanaged_core\msrkinectnui\objd\i386 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib MSRKinectNUI.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib C:\OpenCV2.2\lib\opencv_core220d.lib C:\OpenCV2.2\lib\opencv_highgui220d.lib C:\OpenCV2.2\lib\opencv_video220d.lib C:\OpenCV2.2\lib\opencv_ml220d.lib C:\OpenCV2.2\lib\opencv_legacy220d.lib C:\OpenCV2.2\lib\opencv_imgproc220d.lib /MANIFEST /ManifestFile:"Debug\SkeletalViewer.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\long_weekend\codes\CPP\Debug\SkeletalViewer.pdb" /SUBSYSTEM:WINDOWS /STACK:"10000000","10000000" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\long_weekend\codes\CPP\Debug\SkeletalViewer.lib" /MACHINE:X86 Debug\SkeletalViewer.res
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\virtual-gallery\codes\CPP\Debug\SkeletalViewer.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\..\unmanaged_core\msrkinectnui\objd\i386 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib MSRKinectNUI.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib C:\OpenCV2.2\lib\opencv_core220d.lib C:\OpenCV2.2\lib\opencv_highgui220d.lib C:\OpenCV2.2\lib\opencv_video220d.lib C:\OpenCV2.2\lib\opencv_ml220d.lib C:\OpenCV2.2\lib\opencv_legacy220d.lib C:\OpenCV2.2\lib\opencv_imgproc220d.lib /MANIFEST /ManifestFile:"Debug\SkeletalViewer.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\virtual-gallery\codes\CPP\Debug\SkeletalViewer.pdb" /SUBSYSTEM:WINDOWS /STACK:"10000000","10000000" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\virtual-gallery\codes\CPP\Debug\SkeletalViewer.lib" /MACHINE:X86 Debug\SkeletalViewer.res
          Debug\SkeletalViewer.exe.embed.manifest.res
          Debug\DrawDevice.obj
          Debug\NuiImpl.obj
@@ -38,12 +33,12 @@
          All outputs are up-to-date.
        LinkEmbedManifest:
          All outputs are up-to-date.
-         SkeletalViewer.vcxproj -> C:\long_weekend\codes\CPP\Debug\SkeletalViewer.exe
+         SkeletalViewer.vcxproj -> C:\virtual-gallery\codes\CPP\Debug\SkeletalViewer.exe
        FinalizeBuildStatus:
          Deleting file "Debug\SkeletalViewer.unsuccessfulbuild".
          Touching "Debug\SkeletalViewer.lastbuildstate".
-     1>Done Building Project "C:\long_weekend\codes\CPP\SkeletalViewer.vcxproj" (build target(s)).
+     1>Done Building Project "C:\virtual-gallery\codes\CPP\SkeletalViewer.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.20
+Time Elapsed 00:00:02.10

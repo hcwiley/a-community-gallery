@@ -34,7 +34,9 @@ public:
     void                    Nui_DrawSkeleton( bool bBlank, NUI_SKELETON_DATA * pSkel, HWND hWnd, int WhichSkeletonColor );
     void                    Nui_DrawSkeletonSegment( NUI_SKELETON_DATA * pSkel, int numJoints, ... );
 	void					changeImage();
+	void					watchSkeleton();
 	void					myInit();
+	void					cvOverlayImage(IplImage* src, IplImage* overlay, CvPoint location, CvScalar S, CvScalar D);
 	bool					checkKill();
 	void					destroyer();
     RGBQUAD                 Nui_ShortToQuad_Depth( USHORT s );
@@ -53,22 +55,24 @@ public:
 		int _width;
 		int _height;
 		int _area;
-		int _leftHand;
-		int _rightHand;
+		int lx;
+		int ly;
+		int rx;
+		int ry;
 		float distance;
 		int present;
 
-		int leftHand(int hand=0){
-			if(hand){
-				_leftHand = hand;
+		void leftHand(int x=0, int y=0){
+			if(x && y){
+				lx = x * (WIDTH/ K_WIDTH);
+				ly = y * (HEIGHT/ K_HEIGHT);
 			}
-			return _leftHand;
 		}
-		int rightHand(int hand=0){
-			if(hand){
-				_rightHand = hand;
+		void rightHand(int x=0, int y=0){
+			if(x && y){
+				rx = x * (WIDTH/ K_WIDTH);
+				ry = y * (HEIGHT/ K_HEIGHT);
 			}
-			return _rightHand;
 		}
 		int x(int x=0){
 			if(x)
@@ -135,11 +139,17 @@ private:
     int           m_LastFramesTotal;
 	int imgNum;
 	char imagePath[20];
-	static const int numImages = 100;
+	static const int numImages = 4;
 	int dir;
 	int gotPerson;
 	bool initDone;
 	PERSON person;
+	static const int IMG_WIDTH = 200;
+	static const int IMG_HEIGHT = 180;
+	static const int WIDTH = 1280;
+	static const int HEIGHT = 1024;
+	static const int K_WIDTH = 320;
+	static const int K_HEIGHT = 240;
 	IplImage* images1[numImages];
 	IplImage* images2[numImages];
 	IplImage* images3[numImages];
@@ -148,9 +158,11 @@ private:
 	IplImage* curImage;
 	IplImage* lastImage;
 	IplImage* tmpImg;
+	IplImage* bgImage;
 	IplImage* alphaImg;
 	time_t imageTimer, curTime;
 	CvFont font;
+	float scale;
 	static const int thresh1 = 1000;
 	static const int thresh2 = 2100;
 	static const int thresh3 = 3200;
