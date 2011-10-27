@@ -66,6 +66,8 @@ public:
 			}
 			else
 				_x = ( left + right )/2;
+			if(_x < 0)
+				_x = 0;
 			return _x;
 		};
 		int y(int y=0){
@@ -76,6 +78,8 @@ public:
 			}
 			else
 				_y = ( top + bottom)/2;
+			if(_y < 0 )
+				_y = 0;
 			return _y;
 		};
 		int width(int width=0){
@@ -126,12 +130,20 @@ public:
 				lx = x * (WIDTH/ K_WIDTH);
 				ly = y * (HEIGHT/ K_HEIGHT);
 			}
+			if (lx < 0)
+				lx = 0;
+			if (ly < 0)
+				ly = 0;
 		}
 		void rightHand(int x=0, int y=0){
 			if(x && y){
 				rx = x * (WIDTH/ K_WIDTH);
 				ry = y * (HEIGHT/ K_HEIGHT);
 			}
+			if (rx < 0)
+				rx = 0;
+			if (ry < 0)
+				ry = 0;
 		}
 		int x(int x=0){
 			if(x)
@@ -224,10 +236,10 @@ private:
 	int curNum;
 	time_t imageTimer, curTime;
 	CvFont font;
-	float scale;
+	double scale;
 	static const int RESET_X = 120;
 	static const int RESET_Y = HEIGHT - 120;
-	static const int thresh1 = 2600;
+	static const int thresh1 = 6600;
 	static const int thresh2 = 2100;
 	static const int thresh3 = 3200;
 	static const int thresh4 = 3800;

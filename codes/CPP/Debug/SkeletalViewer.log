@@ -1,4 +1,4 @@
-﻿Build started 10/27/2011 4:18:37 AM.
+﻿Build started 10/27/2011 5:13:20 AM.
      1>Project "C:\virtual-gallery\codes\CPP\SkeletalViewer.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\SkeletalViewer.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -10,11 +10,10 @@
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
      1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(248): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(536): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(537): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(542): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(564): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(565): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(566): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(567): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
        ResourceCompile:
          All outputs are up-to-date.
        ManifestResourceCompile:
@@ -39,4 +38,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.12
+Time Elapsed 00:00:02.23
