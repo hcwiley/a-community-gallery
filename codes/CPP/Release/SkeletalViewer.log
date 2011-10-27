@@ -1,21 +1,25 @@
-﻿Build started 10/26/2011 9:55:00 PM.
+﻿Build started 10/27/2011 12:13:16 AM.
      1>Project "C:\virtual-gallery\codes\CPP\SkeletalViewer.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Release\SkeletalViewer.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
-         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Release\SkeletalViewer.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt NuiImpl.cpp
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Release\SkeletalViewer.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt NuiImpl.cpp SkeletalViewer.cpp
          NuiImpl.cpp
      1>C:\OpenCV2.2\include\opencv2/flann/logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
-     1>NuiImpl.cpp(244): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>NuiImpl.cpp(247): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-     1>NuiImpl.cpp(493): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>NuiImpl.cpp(495): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>NuiImpl.cpp(252): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>NuiImpl.cpp(252): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>NuiImpl.cpp(506): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>NuiImpl.cpp(507): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-     1>NuiImpl.cpp(504): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>NuiImpl.cpp(505): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>NuiImpl.cpp(516): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>NuiImpl.cpp(515): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>NuiImpl.cpp(515): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         SkeletalViewer.cpp
+     1>C:\OpenCV2.2\include\opencv2/flann/logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
        ResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -36,4 +40,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.34
+Time Elapsed 00:00:03.14

@@ -45,6 +45,65 @@ public:
 
     HWND m_hWnd;
 
+	struct IMAGE{
+		IplImage* pic;
+		int left;
+		int right;
+		int top;
+		int bottom;
+		int _x;
+		int _y;
+		int _x0;
+		int _y0;
+		int _width;
+		int _height;
+
+		int x(int x=0){
+			if(x){
+				if(_x0 < 0)
+					_x0 = x;
+				_x = x;
+			}
+			else
+				_x = ( left + right )/2;
+			return _x;
+		};
+		int y(int y=0){
+			if(y){
+				if(_y0 < 0)
+					_y0 = y;
+				_y = y;
+			}
+			else
+				_y = ( top + bottom)/2;
+			return _y;
+		};
+		int width(int width=0){
+			if(width)
+				_width = width;
+			else
+				_width = abs(left-right);
+			return _width;
+		};
+		int height(int height=0){
+			if(height)
+				_height = height;
+			else
+				_height = abs(top-bottom);
+			return _height;
+		};
+		bool over(int x, int y){
+			if(x > _x && x < _x + _width){
+				if(y > _y && y < _y + _height)
+					return true;
+			}
+			return false;
+		}
+	};
+
+	void copyImage(IMAGE* dst, IMAGE* src);
+	void newBg(int not);
+
 	struct PERSON{
 		int left;
 		int right;
@@ -150,16 +209,19 @@ private:
 	static const int HEIGHT = 1024;
 	static const int K_WIDTH = 320;
 	static const int K_HEIGHT = 240;
-	IplImage* images1[numImages];
+	IMAGE* images1[numImages];
 	IplImage* images2[numImages];
 	IplImage* images3[numImages];
 	IplImage* images4[numImages];
 	char text[30];
-	IplImage* curImage;
-	IplImage* lastImage;
+	IMAGE* curImage;
+	IMAGE* lastImage;
 	IplImage* tmpImg;
-	IplImage* bgImage;
+	IplImage* bgImg0;
+	IplImage* bgImg;
+	IplImage* lastbgImg;
 	IplImage* alphaImg;
+	int curBg;
 	time_t imageTimer, curTime;
 	CvFont font;
 	float scale;

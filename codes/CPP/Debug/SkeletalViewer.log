@@ -1,4 +1,4 @@
-﻿Build started 10/27/2011 12:05:52 AM.
+﻿Build started 10/27/2011 3:27:30 AM.
      1>Project "C:\virtual-gallery\codes\CPP\SkeletalViewer.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\SkeletalViewer.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -8,15 +8,13 @@
          NuiImpl.cpp
      1>c:\opencv2.2\include\opencv2\flann\logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(246): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(248): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(251): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(251): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(505): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(506): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(535): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(536): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(514): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(514): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(540): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(541): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
        ResourceCompile:
          All outputs are up-to-date.
        ManifestResourceCompile:
@@ -41,4 +39,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.10
+Time Elapsed 00:00:02.15
