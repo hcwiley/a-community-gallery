@@ -206,7 +206,7 @@ private:
 	static const int IMG_WIDTH = 200;
 	static const int IMG_HEIGHT = 180;
 	static const int WIDTH = 1280;
-	static const int HEIGHT = 1024;
+	static const int HEIGHT = 800;
 	static const int K_WIDTH = 320;
 	static const int K_HEIGHT = 240;
 	IMAGE* images1[numImages];
@@ -221,11 +221,13 @@ private:
 	IplImage* bgImg;
 	IplImage* lastbgImg;
 	IplImage* alphaImg;
-	int curBg;
+	int curNum;
 	time_t imageTimer, curTime;
 	CvFont font;
 	float scale;
-	static const int thresh1 = 1000;
+	static const int RESET_X = 120;
+	static const int RESET_Y = HEIGHT - 120;
+	static const int thresh1 = 2600;
 	static const int thresh2 = 2100;
 	static const int thresh3 = 3200;
 	static const int thresh4 = 3800;

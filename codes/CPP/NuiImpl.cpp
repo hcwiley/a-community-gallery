@@ -243,7 +243,7 @@ void CSkeletalViewerApp::myInit(){
 	alphaImg = cvCreateImage(cvSize(WIDTH, HEIGHT),8,3);
 	//tmpImg = cvCreateImage(cvSize(1280,1024),8,3);
 	*images1 = new IMAGE[numImages];
-	curBg = -1;
+	curNum = -1;
 	for(int i = 0; i < numImages; i++){
 		sprintf(imagePath,"..\\camera1\\%d.jpg", i+1);
 		images1[i] = new IMAGE;
@@ -254,20 +254,20 @@ void CSkeletalViewerApp::myInit(){
 		images1[i]->height(IMG_HEIGHT);
 		tmpImg = cvCreateImage(cvSize(IMG_WIDTH, IMG_HEIGHT),8,3);
 		cvResize(images1[i]->pic, tmpImg, 1);
-		cvOverlayImage(bgImg, tmpImg, cvPoint(images1[i]->_x, images1[i]->_y), cvScalar(0.5,0.5,0.5,0.5), cvScalar(0.5,0.5,0.5,0.5));
 		cvReleaseImage(&images1[i]->pic);
 		images1[i]->pic = cvCloneImage(tmpImg);
 		cvReleaseImage(&tmpImg);
 	}
 	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 1, 1, 1);
 	bgImg0 = cvCloneImage(bgImg);
+	newBg(-1);
 	cvShowImage("virtual gallery",bgImg0);
 	//curImage = images1[0];
 	initDone = true;
 }
 
 void CSkeletalViewerApp::newBg(int not){
-	if(not != curBg){
+	if(not == -1 || not != curNum){
 		cvRectangle(bgImg0,cvPoint(0,0),cvPoint(WIDTH, HEIGHT), cvScalar(255,255,255), CV_FILLED);
 		for(int i = 0; i < numImages; i++){
 			if(i!=not){
@@ -277,8 +277,9 @@ void CSkeletalViewerApp::newBg(int not){
 				cvReleaseImage(&tmpImg);
 			}
 		}
-		curBg = not;
+		curNum = not;
 	}
+	cvRectangle(bgImg0,cvPoint(RESET_X-100, RESET_Y),cvPoint(RESET_X, RESET_Y+100), cvScalar(30,30,200), CV_FILLED);
 }
 
 void  CSkeletalViewerApp::cvOverlayImage(IplImage* src, IplImage* overlay, CvPoint location, CvScalar S, CvScalar D)
@@ -531,11 +532,12 @@ void CSkeletalViewerApp::watchSkeleton(){
 	lastbgImg = cvCloneImage(bgImg);
 	cvReleaseImage(&bgImg);
 	bgImg = cvCloneImage(bgImg0);
-	if(person.rx > 0 && person.lx > 0 && person.rx > person.lx && person.distance > 2400 )
-		scale = 1 + abs((person.rx - person.lx) /1000);
+	if(person.rx > 0 && person.lx > 0 && person.rx > person.lx && person.distance < thresh1 )
+		scale = abs((person.rx - person.lx) / 1000);
 	sprintf(text,"%f \\n %f",scale,person.distance);
-	if( scale < .6 || scale * IMG_WIDTH >= WIDTH || scale * IMG_HEIGHT>= HEIGHT)
+	if( scale <= 0)
 		scale = 1.0;
+	scale = 1.0;
 	cvReleaseImage(&tmpImg);
 	int x = 0;
 	int y = 0;
@@ -545,7 +547,7 @@ void CSkeletalViewerApp::watchSkeleton(){
 		x = 0;
 	if(y < 0)
 		y = 0;
-	if(person.distance < 2600){
+	if(person.distance < thresh1){
 		cvCircle(bgImg, cvPoint(x+curImage->_width/2,y+curImage->_height/2), 10, cvScalar(30, 230, 30), CV_FILLED);
 		for(int i=0; i< numImages; i++){
 			if(images1[i]->over(x,y)){
@@ -559,12 +561,19 @@ void CSkeletalViewerApp::watchSkeleton(){
 			}
 			if(curImage->_width > 0){
 				int w = curImage->_width * scale;
-				int h = curImage->height * scale;
+				int h = curImage->_height * scale;
 				tmpImg = cvCreateImage(cvSize(w,h),8,3);
 				cvResize(curImage->pic, tmpImg, 1);
-				curImage->x(x);
-				curImage->y(y);
-				cvOverlayImage(bgImg, tmpImg, cvPoint(curImage->_x,curImage->_y), cvScalar(0.5,0.5,0.5,0.5), cvScalar(0.5,0.5,0.5,0.5));
+				if(person.ry < RESET_Y){
+					curImage->x(x);
+					curImage->y(y);
+				}
+				cvReleaseImage(&(curImage->pic));
+				curImage->pic = cvCloneImage(tmpImg);
+				curImage->width(w);
+				curImage->height(h);
+				cvReleaseImage(&tmpImg);
+				cvOverlayImage(bgImg, curImage->pic, cvPoint(curImage->_x,curImage->_y), cvScalar(0.5,0.5,0.5,0.5), cvScalar(0.5,0.5,0.5,0.5));
 			}
 			/*
 			double alpha = 0;
@@ -584,11 +593,17 @@ void CSkeletalViewerApp::watchSkeleton(){
 		}
 	}
 	else{
+		if(x < RESET_X && y > RESET_Y){
+			newBg(-1);
+		}
+		if(curNum != -1){
+			cvOverlayImage(bgImg, curImage->pic, cvPoint(curImage->_x,curImage->_y), cvScalar(0.5,0.5,0.5,0.5), cvScalar(0.5,0.5,0.5,0.5));
+		}
 		cvCircle(bgImg, cvPoint(x,y), 20, cvScalar(240, 30, 30), CV_FILLED);
-		newBg(-1);
 	}
 	//cvRectangle(bgImg,cvPoint(0,50),cvPoint(500,100), cvScalar(0,0,0), CV_FILLED);
 	cvPutText(bgImg, text,cvPoint(100,100),&font,cvScalar(0,0,255));
+	cvLine(bgImg, cvPoint(0, RESET_Y), cvPoint(WIDTH, RESET_Y), cvScalar(30,220,30),20);
 	cvShowImage("virtual gallery",bgImg);
 	cvReleaseImage(&lastbgImg);
 }
