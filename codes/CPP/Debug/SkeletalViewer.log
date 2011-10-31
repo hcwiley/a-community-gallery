@@ -1,4 +1,4 @@
-﻿Build started 10/31/2011 1:32:52 PM.
+﻿Build started 10/31/2011 3:08:24 PM.
      1>Project "C:\virtual-gallery\codes\CPP\SkeletalViewer.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\SkeletalViewer.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -8,15 +8,17 @@
          NuiImpl.cpp
      1>c:\opencv2.2\include\opencv2\flann\logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(246): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
      1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(248): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(255): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(252): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(578): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(570): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(603): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(604): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(607): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(597): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(598): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\virtual-gallery\codes\cpp\nuiimpl.cpp(601): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
        ResourceCompile:
          All outputs are up-to-date.
        ManifestResourceCompile:
@@ -41,4 +43,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.37
+Time Elapsed 00:00:02.29

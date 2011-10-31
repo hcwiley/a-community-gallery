@@ -47,6 +47,8 @@ public:
 
 	struct IMAGE{
 		IplImage* pic;
+		int imgNum;
+		int galNum;
 		int left;
 		int right;
 		int top;
@@ -232,20 +234,23 @@ private:
 	IMAGE* curImage;
 	IMAGE* lastImage;
 	IplImage* tmpImg;
+	IplImage* leftHand;
+	IplImage* rightHand;
 	IplImage* bgImg0;
 	IplImage* bgImg;
 	IplImage* lastbgImg;
 	IplImage* alphaImg;
+	static const int BORDER = 60;
 	int curNum;
 	time_t imageTimer, curTime;
 	CvFont font;
 	double scale;
 	static const int RESET_X = 150;
 	static const int RESET_Y = HEIGHT - 220;
-	static const int LEFT_X = 250;
-	static const int RIGHT_X= WIDTH - 250;
-	static const int thresh1 = 1580;
-	static const int thresh2 = 2100;
+	static const int LEFT_X = 150;
+	static const int RIGHT_X= WIDTH - LEFT_X;
+	static const int thresh1 = 1600;
+	static const int thresh2 = 2000;
 	static const int thresh3 = 3200;
 	static const int thresh4 = 3800;
 };
