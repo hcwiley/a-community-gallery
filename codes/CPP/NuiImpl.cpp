@@ -218,8 +218,8 @@ void CSkeletalViewerApp::Nui_UnInit( )
     m_DrawVideo.DestroyDevice( );
 	cvDestroyWindow("virtual gallery");
 	for(int i =0; i < numImages; i++){
-		cvReleaseImage(&images1[i]->pic);
-		free(&images1[i]);
+		cvReleaseImage(&images[gallery][i]->pic);
+		free(&images[gallery][i]);
 	}
 	cvReleaseImage(&tmpImg);
 	cvReleaseImage(&alphaImg);
@@ -242,22 +242,31 @@ void CSkeletalViewerApp::myInit(){
 	cvRectangle(bgImg,cvPoint(0,0),cvPoint(WIDTH, HEIGHT), cvScalar(255,255,255), CV_FILLED);
 	alphaImg = cvCreateImage(cvSize(WIDTH, HEIGHT),8,3);
 	//tmpImg = cvCreateImage(cvSize(1280,1024),8,3);
-	*images1 = new IMAGE[numImages];
 	curNum = -1;
 	for(int i = 0; i < numImages; i++){
+		gallery = 0;
 		sprintf(imagePath,"..\\camera1\\%d.jpg", i+1);
-		images1[i] = new IMAGE;
-		images1[i]->pic = cvLoadImage(imagePath);
-		images1[i]->x(200+(i*IMG_WIDTH));
-		images1[i]->y(10);
-		images1[i]->width(IMG_WIDTH);
-		images1[i]->height(IMG_HEIGHT);
-		tmpImg = cvCreateImage(cvSize(IMG_WIDTH, IMG_HEIGHT),8,3);
-		cvResize(images1[i]->pic, tmpImg, 1);
-		cvReleaseImage(&images1[i]->pic);
-		images1[i]->pic = cvCloneImage(tmpImg);
-		cvReleaseImage(&tmpImg);
+		images[gallery][i] = new IMAGE;
+		images[gallery][i]->pic = cvLoadImage(imagePath);
+		images[gallery][i]->x(200+(i*IMG_WIDTH));
+		images[gallery][i]->y(10);
+		images[gallery][i]->width(IMG_WIDTH);
+		images[gallery][i]->height(IMG_HEIGHT);
+		sprintf(imagePath,"..\\camera2\\%d.jpg", i+1);
+		gallery = 1;
+		images[gallery][i] = new IMAGE;
+		images[gallery][i]->pic = cvLoadImage(imagePath);
+		images[gallery][i]->x(200+(i*IMG_WIDTH));
+		images[gallery][i]->y(10);
+		images[gallery][i]->width(IMG_WIDTH);
+		images[gallery][i]->height(IMG_HEIGHT);
+		//tmpImg = cvCreateImage(cvSize(IMG_WIDTH, IMG_HEIGHT),8,3);
+		//cvResize(images[gallery][i]->pic, tmpImg, 1);
+		//cvReleaseImage(&images[gallery][i]->pic);
+		//images[gallery][i]->pic = cvCloneImage(tmpImg);
+		//cvReleaseImage(&tmpImg);
 	}
+	gallery = 0;
 	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 1.3, 1.3, (0,0), 2);
 	bgImg0 = cvCloneImage(bgImg);
 	newBg(-1);
@@ -272,34 +281,58 @@ void CSkeletalViewerApp::newBg(int not){
 		for(int i = 0; i < numImages; i++){
 			if(i!=not){
 				tmpImg = cvCreateImage(cvSize(IMG_WIDTH, IMG_HEIGHT),8,3);
-				cvResize(images1[i]->pic, tmpImg, 1);
-				cvOverlayImage(bgImg0, tmpImg, cvPoint(images1[i]->_x0, images1[i]->_y0), cvScalar(0.5,0.5,0.5,0.5), cvScalar(0.5,0.5,0.5,0.5));
+				cvResize(images[gallery][i]->pic, tmpImg, 1);
+				cvOverlayImage(bgImg0, tmpImg, cvPoint(images[gallery][i]->_x0, images[gallery][i]->_y0),1, .5);
 				cvReleaseImage(&tmpImg);
 			}
 		}
 		curNum = not;
 	}
-	cvRectangle(bgImg0,cvPoint(RESET_X-100, RESET_Y),cvPoint(RESET_X, RESET_Y+100), cvScalar(30,30,200), CV_FILLED);
 }
 
-void  CSkeletalViewerApp::cvOverlayImage(IplImage* src, IplImage* overlay, CvPoint location, CvScalar S, CvScalar D)
+void CSkeletalViewerApp::newBgImages(int dir){
+	if(dir > 0 && gallery + dir >= numGalleries)
+		gallery = 0;
+	else if(dir < 0 && gallery + dir < 0)
+		gallery = numGalleries - 1;
+	else
+		gallery += dir;
+	newBg(-1);
+}
+
+void  CSkeletalViewerApp::cvOverlayImage(IplImage* src, IplImage* overlay, CvPoint location, float S, float D)
 {
 	int x,y,i;
-  for(x=0;x < overlay->width -10;x++)
+  for(x=0;x < overlay->width - 10;x++)
     {
         if(x+location.x>=src->width) continue;
         for(y=0;y < overlay->height -10;y++)
         {
-            if(y+location.y>=src->height) continue;
-            CvScalar source = cvGet2D(src, y+location.y, x+location.x);
+			CvPoint pt = {x,y};
+			uchar* temp_ptr_over = &((uchar*)(overlay->imageData + overlay->widthStep*pt.y))[pt.x*3];
+			pt.x = x+location.x;
+			pt.y = y+location.y;
+			uchar* temp_ptr_src = &((uchar*)(src->imageData + src->widthStep*pt.y))[pt.x*3];
+			for(i=0;i<4;i++)
+				temp_ptr_src[i] = temp_ptr_over[i];
+
+			/*
+            if(y+location.y >= src->height) continue;
+			CvScalar source = cvGet2D(src, y+location.y, x+location.x);
             CvScalar over = cvGet2D(overlay, y, x);
-            CvScalar merged;
+			CvScalar merged;
             for(i=0;i<4;i++){
-            merged.val[i] = (S.val[i]*source.val[i]+D.val[i]*over.val[i]);
+				if(i == 3){
+					merged.val[i] = ;
+				}
+				else
+					merged.val[i] = over.val[i];
 			}
             cvSet2D(src, y+location.y, x+location.x, merged);
+			*/
         }
     }
+  cvAddWeighted(bgImg0,1-D,src,D,0.0,src);
 }
 
 void CSkeletalViewerApp::copyImage(IMAGE* dst, IMAGE* src){
@@ -529,96 +562,105 @@ void CSkeletalViewerApp::Nui_DrawSkeletonSegment( NUI_SKELETON_DATA * pSkel, int
 }
 
 void CSkeletalViewerApp::watchSkeleton(){
-	if(time(&curTime) - imageTimer > 0.001){
+	//if(time(&curTime) - imageTimer > 0.002){
+	if(true){
 		time(&imageTimer);
 		//lastbgImg = cvCloneImage(bgImg);
 		cvReleaseImage(&bgImg);
 		bgImg = cvCloneImage(bgImg0);
+		cvCircle(bgImg, cvPoint(person.lx-curImage->_width/2,person.ly-curImage->_height/2), 10, cvScalar(230, 30, 30), CV_FILLED);
+		cvCircle(bgImg, cvPoint(person.rx-curImage->_width/2,person.ry-curImage->_height/2), 10, cvScalar(30, 230, 30), CV_FILLED);
 		cvReleaseImage(&tmpImg);
 		scale = 1;
-		scale = abs(person.rx - person.lx);
-		scale /= WIDTH;
-		scale += 0.8;
-		sprintf(text,"%f",scale);
+		scale = abs(person.rx);
+		scale /= WIDTH/2;
+		scale += 1.0;
+		sprintf(text,"%f",person.distance);
 		if( scale <= .8)
 			scale = .8;
 		if( scale > 3)
 			scale = 3;
-		scale = 1.0;
+		//scale = 1.0;
 		int x = 0;
 		int y = 0;
 		x = person.lx;
 		y = person.ly;
 		if(person.distance < thresh1){
-			cvCircle(bgImg, cvPoint(person.lx+curImage->_width/2,person.ly+curImage->_height/2), 10, cvScalar(230, 30, 30), CV_FILLED);
-			cvCircle(bgImg, cvPoint(person.rx+curImage->_width/2,person.ry+curImage->_height/2), 10, cvScalar(30, 230, 30), CV_FILLED);
 			for(int i=0; i< numImages; i++){
-				if(images1[i]->over(x,y)){
+				if(images[gallery][i]->over(x,y)){
 					if(curImage->_width > 0){
 						copyImage(lastImage, curImage);
 						lastImage->x(lastImage->_x0);
 						lastImage->y(lastImage->_y0);
 					}
-					copyImage(curImage, images1[i]);
+					copyImage(curImage, images[gallery][i]);
 					newBg(i);
 				}
-				if(curImage->_width > 0){
-					int w = curImage->_width * scale;
-					int h = curImage->_height * scale;
+			}
+			if(curImage->_width > 0){
+				//if(time(&curTime) - imageTimer > 0.01){
+					//time(&imageTimer);
+					int w = IMG_WIDTH * scale;
+					int h = IMG_HEIGHT * scale;
+					w = person.rx - person.lx;
+					scale = w / IMG_WIDTH;
+					h = IMG_HEIGHT * scale;
 					if(w >= WIDTH)
-						w = WIDTH - 200;
+						w = WIDTH;
 					if(h >= HEIGHT)
-						h = HEIGHT - 200;
-					if(w < 100)
-						w = 100;
-					if(h < 100)
-						h = 100;
+						h = HEIGHT;
+					if(w < 70)
+						w = 70;
+					if(h < 70)
+						h = 70;
 					tmpImg = cvCreateImage(cvSize(w,h),8,3);
 					cvResize(curImage->pic, tmpImg, 1);
-					if(person.ry < RESET_Y){
-						curImage->x(x);
-						curImage->y(y);
-					}
 					cvReleaseImage(&(curImage->pic));
 					curImage->pic = cvCloneImage(tmpImg);
 					curImage->width(w);
 					curImage->height(h);
 					cvReleaseImage(&tmpImg);
-					cvOverlayImage(bgImg, curImage->pic, cvPoint(curImage->_x,curImage->_y), cvScalar(0.5,0.5,0.5,0.5), cvScalar(0.5,0.5,0.5,0.5));
+					
+				if(person.ry < RESET_Y){
+					curImage->x(x);
+					curImage->y(y);
 				}
-																		/*
-			double alpha = 0;
-			double beta = 1;
-			int loop = 3;
-			float step = 1.0 / loop;
-			for(int i = 0; i < loop; i++){
-				cvAddWeighted(bgImg0, alpha, lastbgImg, beta, 0.0, alphaImg);
-				alpha += step;
-				beta -= step;
-				cvShowImage("virtual gallery", alphaImg);
-			}
-			cvReleaseImage(&bgImg0);
-			bgImg0 = cvCloneImage(alphaImg);
-			cvShowImage("virtual gallery",bgImg0);
-			*/
+				x = curImage->_x - curImage->_width/2;
+				y = curImage->_y - curImage->_height/2;
+				if(x < 0)
+					x =0;
+				if(y<0)
+					y=0;
+				if(x > WIDTH)
+					x= WIDTH;
+				if(y> HEIGHT)
+					y= HEIGHT;
+				curImage->x(x);
+				curImage->y(y);
+				cvOverlayImage(bgImg, curImage->pic, cvPoint(x,y),1, 1);
+				//}
 			}
 		}
 		else{
+			if(x < LEFT_X ){
+				newBgImages(-1);
+			}
+			else if(x > RIGHT_X ){
+				newBgImages(1);
+			}
 			if(x < RESET_X && y > RESET_Y){
 				newBg(-1);
 			}
 			if(curNum != -1){
-				cvOverlayImage(bgImg, curImage->pic, cvPoint(curImage->_x,curImage->_y), cvScalar(0.5,0.5,0.5,0.5), cvScalar(0.5,0.5,0.5,0.5));
+				cvOverlayImage(bgImg, curImage->pic, cvPoint(curImage->_x,curImage->_y), 1, 1);
 			}
-			cvCircle(bgImg, cvPoint(x,y), 20, cvScalar(240, 30, 30), CV_FILLED);
-			cvCircle(bgImg, cvPoint(x,y), 20, cvScalar(30, 240, 30), CV_FILLED);
 		}
 		//cvRectangle(bgImg,cvPoint(0,50),cvPoint(500,100), cvScalar(0,0,0), CV_FILLED);
-		cvPutText(bgImg, text,cvPoint(100,100),&font,cvScalar(0,0,255));
-		cvLine(bgImg, cvPoint(0, RESET_Y), cvPoint(WIDTH, RESET_Y), cvScalar(30,220,30),20);
-		cvShowImage("virtual gallery",bgImg);
+		//cvPutText(bgImg, text,cvPoint(100,100),&font,cvScalar(0,0,255));
+		//cvLine(bgImg, cvPoint(0, RESET_Y), cvPoint(WIDTH, RESET_Y), cvScalar(30,220,30),20);
 		//cvReleaseImage(&lastbgImg);
 	}
+	cvShowImage("virtual gallery",bgImg);
 }
 
 void CSkeletalViewerApp::changeImage(){

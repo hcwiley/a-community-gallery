@@ -36,7 +36,7 @@ public:
 	void					changeImage();
 	void					watchSkeleton();
 	void					myInit();
-	void					cvOverlayImage(IplImage* src, IplImage* overlay, CvPoint location, CvScalar S, CvScalar D);
+	void					cvOverlayImage(IplImage* src, IplImage* overlay, CvPoint location, float S, float D);
 	bool					checkKill();
 	void					destroyer();
     RGBQUAD                 Nui_ShortToQuad_Depth( USHORT s );
@@ -107,6 +107,7 @@ public:
 
 	void copyImage(IMAGE* dst, IMAGE* src);
 	void newBg(int not);
+	void newBgImages(int dir);
 
 	struct PERSON{
 		int left;
@@ -211,6 +212,7 @@ private:
 	int imgNum;
 	char imagePath[20];
 	static const int numImages = 4;
+	static const int numGalleries = 2;
 	int dir;
 	int gotPerson;
 	bool initDone;
@@ -218,13 +220,14 @@ private:
 	static const int IMG_WIDTH = 200;
 	static const int IMG_HEIGHT = 180;
 	static const int WIDTH = 1280;
-	static const int HEIGHT = 800;
+	static const int HEIGHT = 1024;
 	static const int K_WIDTH = 320;
 	static const int K_HEIGHT = 240;
-	IMAGE* images1[numImages];
-	IplImage* images2[numImages];
-	IplImage* images3[numImages];
-	IplImage* images4[numImages];
+	IMAGE* images[numGalleries][numImages];
+	//IMAGE*  images2[numImages];
+	//IMAGE*  images3[numImages];
+	//IMAGE*  images4[numImages];
+	int gallery;
 	char text[30];
 	IMAGE* curImage;
 	IMAGE* lastImage;
@@ -237,9 +240,11 @@ private:
 	time_t imageTimer, curTime;
 	CvFont font;
 	double scale;
-	static const int RESET_X = 120;
-	static const int RESET_Y = HEIGHT - 120;
-	static const int thresh1 = 6600;
+	static const int RESET_X = 150;
+	static const int RESET_Y = HEIGHT - 220;
+	static const int LEFT_X = 250;
+	static const int RIGHT_X= WIDTH - 250;
+	static const int thresh1 = 1580;
 	static const int thresh2 = 2100;
 	static const int thresh3 = 3200;
 	static const int thresh4 = 3800;
