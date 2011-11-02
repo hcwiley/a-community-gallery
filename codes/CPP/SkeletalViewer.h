@@ -66,10 +66,6 @@ public:
 					_x0 = x;
 				_x = x;
 			}
-			else
-				_x = ( left + right )/2;
-			if(_x < 0)
-				_x = 0;
 			return _x;
 		};
 		int y(int y=0){
@@ -78,10 +74,6 @@ public:
 					_y0 = y;
 				_y = y;
 			}
-			else
-				_y = ( top + bottom)/2;
-			if(_y < 0 )
-				_y = 0;
 			return _y;
 		};
 		int width(int width=0){
@@ -214,7 +206,7 @@ private:
 	int imgNum;
 	char imagePath[20];
 	static const int numImages = 4;
-	static const int numGalleries = 2;
+	static const int numGalleries = 3;
 	int dir;
 	int gotPerson;
 	bool initDone;
@@ -240,6 +232,8 @@ private:
 	IplImage* bgImg;
 	IplImage* lastbgImg;
 	IplImage* alphaImg;
+	IMAGE* leftArrow;
+	IMAGE* rightArrow;
 	static const int BORDER = 60;
 	int curNum;
 	time_t imageTimer, curTime;
@@ -247,10 +241,16 @@ private:
 	double scale;
 	static const int RESET_X = 150;
 	static const int RESET_Y = HEIGHT - 220;
-	static const int LEFT_X = 150;
-	static const int RIGHT_X= WIDTH - LEFT_X;
-	static const int thresh1 = 1600;
-	static const int thresh2 = 2000;
+	static const int LEFT_ICON_X = 150;
+	static const int LEFT_ICON_WIDTH = 85;
+	static const int LEFT_ICON_HEIGHT = 70;
+	static const int LEFT_ICON_Y = HEIGHT / 2 - LEFT_ICON_HEIGHT/2;
+	static const int RIGHT_ICON_X= WIDTH - LEFT_ICON_X - LEFT_ICON_WIDTH;
+	static const int RIGHT_ICON_WIDTH = LEFT_ICON_WIDTH;
+	static const int RIGHT_ICON_HEIGHT = LEFT_ICON_HEIGHT;
+	static const int RIGHT_ICON_Y = HEIGHT / 2 - RIGHT_ICON_HEIGHT/2;
+	static const int thresh1 = 2450;
+	static const int thresh2 = 3200;
 	static const int thresh3 = 3200;
 	static const int thresh4 = 3800;
 };
