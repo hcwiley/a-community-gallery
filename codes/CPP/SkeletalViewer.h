@@ -49,6 +49,7 @@ public:
 		IplImage* pic;
 		int imgNum;
 		int galNum;
+		float opacity;
 		int left;
 		int right;
 		int top;
@@ -100,6 +101,7 @@ public:
 	};
 
 	void copyImage(IMAGE* dst, IMAGE* src);
+	void clearImage(IMAGE* image);
 	void newBg(int not);
 	void newBgImages(int dir);
 
@@ -118,6 +120,7 @@ public:
 		int rx;
 		int ry;
 		float distance;
+		CvScalar color;
 		int present;
 
 		void leftHand(int x=0, int y=0){
@@ -226,12 +229,12 @@ private:
 	IMAGE* curImage;
 	IMAGE* lastImage;
 	IplImage* tmpImg;
-	IplImage* leftHand;
-	IplImage* rightHand;
 	IplImage* bgImg0;
 	IplImage* bgImg;
 	IplImage* lastbgImg;
 	IplImage* alphaImg;
+	IMAGE* leftHand;
+	IMAGE* rightHand;
 	IMAGE* leftArrow;
 	IMAGE* rightArrow;
 	static const int BORDER = 60;
@@ -239,6 +242,7 @@ private:
 	time_t imageTimer, curTime;
 	CvFont font;
 	double scale;
+	static const bool showDistance = false;
 	static const int RESET_X = 150;
 	static const int RESET_Y = HEIGHT - 220;
 	static const int LEFT_ICON_X = 150;
@@ -249,8 +253,8 @@ private:
 	static const int RIGHT_ICON_WIDTH = LEFT_ICON_WIDTH;
 	static const int RIGHT_ICON_HEIGHT = LEFT_ICON_HEIGHT;
 	static const int RIGHT_ICON_Y = HEIGHT / 2 - RIGHT_ICON_HEIGHT/2;
-	static const int thresh1 = 2450;
-	static const int thresh2 = 3200;
+	static const int thresh1 = 2200;
+	static const int thresh2 = 3000;
 	static const int thresh3 = 3200;
 	static const int thresh4 = 3800;
 };

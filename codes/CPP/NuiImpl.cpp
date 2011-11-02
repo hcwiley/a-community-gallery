@@ -240,13 +240,16 @@ void CSkeletalViewerApp::myInit(){
 	lastImage = new IMAGE;
 	bgImg = cvCreateImage(cvSize(WIDTH, HEIGHT),8,3);
 	cvRectangle(bgImg,cvPoint(0,0),cvPoint(WIDTH, HEIGHT), cvScalar(255,255,255), CV_FILLED);
-	alphaImg = cvCreateImage(cvSize(WIDTH, HEIGHT),8,3);
 	//tmpImg = cvCreateImage(cvSize(1280,1024),8,3);
 	curNum = -1;
 	sprintf(imagePath,"leftHand.jpg");
-	leftHand = cvLoadImage(imagePath);
+	leftHand = new IMAGE;
+	leftHand->pic = cvLoadImage(imagePath);
+	leftHand->opacity = 1;
 	sprintf(imagePath,"rightHand.jpg");
-	rightHand = cvLoadImage(imagePath);
+	rightHand = new IMAGE;
+	rightHand->opacity = 1;
+	rightHand->pic = cvLoadImage(imagePath);
 	sprintf(imagePath,"leftArrow.jpg");
 	leftArrow = new IMAGE;
 	leftArrow->pic = cvLoadImage(imagePath);
@@ -323,7 +326,18 @@ void CSkeletalViewerApp::newBgImages(int dir){
 		gallery = numGalleries - 1;
 	else
 		gallery += dir;
+	clearImage(curImage);
 	newBg(-1);
+}
+
+void CSkeletalViewerApp::clearImage(IMAGE* image){
+	cvReleaseImage(&(image->pic));
+	image->x(-1);
+	image->y(-1);
+	image->_x0 = -1;
+	image->_y0 = -1;
+	image->width(-1);
+	image->height(-1);
 }
 
 void  CSkeletalViewerApp::cvOverlayImage(IplImage* src, IplImage* overlay, CvPoint location, float S, float D)
@@ -333,22 +347,22 @@ void  CSkeletalViewerApp::cvOverlayImage(IplImage* src, IplImage* overlay, CvPoi
 	int h = overlay->height;
 	IplImage* tmp = cvCreateImage(cvSize(w,h),8,3);
 	cvRectangle(tmp, cvPoint(0,0),cvPoint(w,h), cvScalar(255,255,255), CV_FILLED);
-	cvAddWeighted(tmp,1-D,overlay,D,0.0,overlay);
-  for(x=0;x < overlay->width;x++)
-    {
-        if(x+location.x>=src->width) continue;
-        for(y=0;y < overlay->height;y++)
-        {
+	cvAddWeighted(overlay,D,tmp,1-D,0.0,tmp);
+	for(x=0;x < tmp->width;x++)
+	{
+		if(x+location.x >= src->width) continue;
+		for(y=0;y < tmp->height;y++)
+		{
 			CvPoint pt = {x,y};
-			uchar* temp_ptr_over = &((uchar*)(overlay->imageData + overlay->widthStep*pt.y))[pt.x*3];
+			uchar* temp_ptr_over = &((uchar*)(tmp->imageData + tmp->widthStep*pt.y))[pt.x*3];
 			pt.x = x+location.x;
 			pt.y = y+location.y;
 			uchar* temp_ptr_src = &((uchar*)(src->imageData + src->widthStep*pt.y))[pt.x*3];
 			if (pt.x < WIDTH && pt.x > 0 && pt.y < HEIGHT && pt.y > 0)
 				for(i=0;i<sizeof(temp_ptr_src);i++)
 					temp_ptr_src[i] = temp_ptr_over[i];
-        }
-    }
+		}
+	}
 }
 
 void CSkeletalViewerApp::copyImage(IMAGE* dst, IMAGE* src){
@@ -602,6 +616,8 @@ void CSkeletalViewerApp::watchSkeleton(){
 		x = person.lx;
 		y = person.ly;
 		if(person.distance < thresh1){
+			leftHand->opacity = 1.0;
+			rightHand->opacity = 1.0;
 			for(int i=0; i< numImages; i++){
 				if(images[gallery][i]->over(x,y)){
 					if(curImage->_width > 0){
@@ -615,6 +631,8 @@ void CSkeletalViewerApp::watchSkeleton(){
 			}
 		}
 		else if(person.distance < thresh2){
+			leftHand->opacity = 0.4;
+			rightHand->opacity = 0.4;
 			if(curImage->_width > 0){
 				//if(time(&curTime) - imageTimer > 0.01){
 					//time(&imageTimer);
@@ -665,6 +683,8 @@ void CSkeletalViewerApp::watchSkeleton(){
 			}
 		}
 		else{
+			leftHand->opacity = 0.15;
+			rightHand->opacity = 0.15;
 			if(time(&curTime) - imageTimer > 0.01){
 				time(&imageTimer);
 				if(leftArrow->over(person.lx,person.ly) || leftArrow->over(person.rx,person.ry)){
@@ -681,12 +701,14 @@ void CSkeletalViewerApp::watchSkeleton(){
 				cvOverlayImage(bgImg, curImage->pic, cvPoint(curImage->_x,curImage->_y), 1, 1);
 			}
 		}
-		//cvRectangle(bgImg,cvPoint(0,50),cvPoint(500,100), cvScalar(0,0,0), CV_FILLED);
-		//cvPutText(bgImg, text,cvPoint(100,100),&font,cvScalar(0,0,255));
+		if(showDistance){
+			cvRectangle(bgImg,cvPoint(0,50),cvPoint(500,100), cvScalar(0,0,0), CV_FILLED);
+			cvPutText(bgImg, text,cvPoint(100,100),&font,cvScalar(0,0,255));
+		}
 		//cvLine(bgImg, cvPoint(0, RESET_Y), cvPoint(WIDTH, RESET_Y), cvScalar(30,220,30),20);
 		//cvReleaseImage(&lastbgImg);
-		cvOverlayImage(bgImg, leftHand, cvPoint(person.lx,person.ly), 1,1);
-		cvOverlayImage(bgImg, rightHand, cvPoint(person.rx,person.ry), 1,1);
+		cvOverlayImage(bgImg, leftHand->pic, cvPoint(person.lx,person.ly), 1,leftHand->opacity);
+		cvOverlayImage(bgImg, rightHand->pic, cvPoint(person.rx,person.ry), 1,rightHand->opacity);
 		cvShowImage("virtual gallery",bgImg);
 	}
 }
@@ -875,34 +897,40 @@ RGBQUAD CSkeletalViewerApp::Nui_ShortToQuad_Depth( USHORT s )
     case 1:
         q.rgbRed = l;
 		person.present = 1;
+		person.color = cvScalar(q.rgbRed, q.rgbGreen, q.rgbBlue);
         break;
     case 2:
         q.rgbGreen = l;
 		person.present = 1;
+		person.color = cvScalar(q.rgbRed, q.rgbGreen, q.rgbBlue);
         break;
     case 3:
         q.rgbRed = l / 4;
         q.rgbGreen = l;
         q.rgbBlue = l;
 		person.present = 1;
+		person.color = cvScalar(q.rgbRed, q.rgbGreen, q.rgbBlue);
         break;
     case 4:
         q.rgbRed = l;
         q.rgbGreen = l;
         q.rgbBlue = l / 4;
 		person.present = 1;
+		person.color = cvScalar(q.rgbRed, q.rgbGreen, q.rgbBlue);
         break;
     case 5:
         q.rgbRed = l;
         q.rgbGreen = l / 4;
         q.rgbBlue = l;
 		person.present = 1;
+		person.color = cvScalar(q.rgbRed, q.rgbGreen, q.rgbBlue);
         break;
     case 6:
         q.rgbRed = l / 2;
         q.rgbGreen = l / 2;
         q.rgbBlue = l;
 		person.present = 1;
+		person.color = cvScalar(q.rgbRed, q.rgbGreen, q.rgbBlue);
         break;
     case 7:
         q.rgbRed = 255 - ( l / 2 );
