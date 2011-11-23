@@ -42,7 +42,7 @@ public:
     RGBQUAD                 Nui_ShortToQuad_Depth( USHORT s );
 
     static LONG CALLBACK    WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
+	static const int D_LENGTH = 70;
     HWND m_hWnd;
 
 	struct IMAGE{
@@ -60,6 +60,11 @@ public:
 		int _y0;
 		int _width;
 		int _height;
+		char* title;
+		char* artist;
+		char* materials;
+		char* year;
+		char description[4][D_LENGTH];
 
 		int x(int x=0){
 			if(x){
@@ -227,6 +232,8 @@ private:
 	//IMAGE*  images4[numImages];
 	int gallery;
 	char text[30];
+	char helpText1[40];
+	char helpText2[40];
 	IMAGE* curImage;
 	IMAGE* lastImage;
 	IplImage* tmpImg;
@@ -236,12 +243,22 @@ private:
 	IplImage* alphaImg;
 	IMAGE* leftHand;
 	IMAGE* rightHand;
+	IplImage* leftAlpha;
+	IplImage* rightAlpha;
+	IplImage* leftFull;
+	IplImage* rightFull;
+	IplImage* leftGreen;
+	IplImage* rightGreen;
 	IMAGE* leftArrow;
 	IMAGE* rightArrow;
 	static const int BORDER = 60;
 	int curNum;
 	time_t imageTimer, curTime;
 	CvFont font;
+	CvFont titleSmall;
+	CvFont title;
+	CvFont artist;
+	CvFont p;
 	double scale;
 	static const bool showDistance = false;
 	static const int RESET_X = 150;
@@ -254,9 +271,15 @@ private:
 	static const int RIGHT_ICON_WIDTH = LEFT_ICON_WIDTH;
 	static const int RIGHT_ICON_HEIGHT = LEFT_ICON_HEIGHT;
 	static const int RIGHT_ICON_Y = HEIGHT / 2 - RIGHT_ICON_HEIGHT/2;
-	static const int thresh0 = 1800;
-	static const int thresh1 = 2300;
-	static const int thresh2 = 2600;
+	static const int INFO_BOX_X = 200;
+	static const int INFO_BOX_Y = 35;
+	static const int INFO_BOX_WIDTH = WIDTH - 400;
+	static const int INFO_BOX_HEIGHT = IMG_HEIGHT + 30;
+	static const int HELP_TEXT_X = WIDTH / 2 ;
+	static const int HELP_TEXT_Y = HEIGHT / 2;
+	static const int thresh0 = 2200;
+	static const int thresh1 = 2550;
+	static const int thresh2 = 3050;
 	static const int thresh3 = 3200;
 	static const int thresh4 = 3800;
 };

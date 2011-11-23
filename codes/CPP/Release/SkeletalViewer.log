@@ -1,4 +1,4 @@
-﻿Build started 11/22/2011 3:47:35 PM.
+﻿Build started 11/22/2011 11:58:54 PM.
      1>Project "C:\virtual-gallery\codes\CPP\SkeletalViewer.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Touching "Release\SkeletalViewer.unsuccessfulbuild".
@@ -8,32 +8,53 @@
          NuiImpl.cpp
      1>C:\OpenCV2.2\include\opencv2/flann/logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
-     1>NuiImpl.cpp(245): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>NuiImpl.cpp(248): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-     1>NuiImpl.cpp(249): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>NuiImpl.cpp(252): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-     1>NuiImpl.cpp(253): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>NuiImpl.cpp(254): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-     1>NuiImpl.cpp(261): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>NuiImpl.cpp(259): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-     1>NuiImpl.cpp(269): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>NuiImpl.cpp(263): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-     1>NuiImpl.cpp(275): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>NuiImpl.cpp(275): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>NuiImpl.cpp(306): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>NuiImpl.cpp(306): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>NuiImpl.cpp(583): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>NuiImpl.cpp(265): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-     1>NuiImpl.cpp(609): warning C4305: '=' : truncation from 'double' to 'float'
-     1>NuiImpl.cpp(610): warning C4305: '=' : truncation from 'double' to 'float'
-     1>NuiImpl.cpp(614): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>NuiImpl.cpp(615): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>NuiImpl.cpp(618): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>NuiImpl.cpp(661): warning C4305: '=' : truncation from 'double' to 'float'
-     1>NuiImpl.cpp(662): warning C4305: '=' : truncation from 'double' to 'float'
-     1>NuiImpl.cpp(864): warning C4244: '=' : conversion from 'double' to 'BYTE', possible loss of data
-     1>NuiImpl.cpp(865): warning C4244: '=' : conversion from 'double' to 'BYTE', possible loss of data
-     1>NuiImpl.cpp(866): warning C4244: '=' : conversion from 'double' to 'BYTE', possible loss of data
+     1>NuiImpl.cpp(270): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>NuiImpl.cpp(278): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>NuiImpl.cpp(286): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>NuiImpl.cpp(292): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>NuiImpl.cpp(292): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>NuiImpl.cpp(301): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>NuiImpl.cpp(305): warning C4244: '=' : conversion from 'std::streamoff' to 'int', possible loss of data
+     1>NuiImpl.cpp(326): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>NuiImpl.cpp(327): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>NuiImpl.cpp(346): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>NuiImpl.cpp(346): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>NuiImpl.cpp(468): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>NuiImpl.cpp(469): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>NuiImpl.cpp(470): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>NuiImpl.cpp(471): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>NuiImpl.cpp(679): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>NuiImpl.cpp(724): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>NuiImpl.cpp(725): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>NuiImpl.cpp(727): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>NuiImpl.cpp(729): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>NuiImpl.cpp(810): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>NuiImpl.cpp(811): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
        ResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -54,4 +75,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.25
+Time Elapsed 00:00:03.13
