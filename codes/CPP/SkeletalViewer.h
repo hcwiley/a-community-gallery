@@ -106,6 +106,7 @@ public:
 	void newBgImages(int dir);
 
 	struct PERSON{
+		int number;
 		int left;
 		int right;
 		int top;
@@ -216,8 +217,8 @@ private:
 	PERSON person;
 	static const int IMG_WIDTH = 200;
 	static const int IMG_HEIGHT = 180;
-	static const int WIDTH = 1280;
-	static const int HEIGHT = 1024;
+	static const int WIDTH = 1680;
+	static const int HEIGHT = 1050;
 	static const int K_WIDTH = 320;
 	static const int K_HEIGHT = 240;
 	IMAGE* images[numGalleries][numImages];
@@ -253,8 +254,9 @@ private:
 	static const int RIGHT_ICON_WIDTH = LEFT_ICON_WIDTH;
 	static const int RIGHT_ICON_HEIGHT = LEFT_ICON_HEIGHT;
 	static const int RIGHT_ICON_Y = HEIGHT / 2 - RIGHT_ICON_HEIGHT/2;
-	static const int thresh1 = 2200;
-	static const int thresh2 = 3000;
+	static const int thresh0 = 1800;
+	static const int thresh1 = 2300;
+	static const int thresh2 = 2600;
 	static const int thresh3 = 3200;
 	static const int thresh4 = 3800;
 };

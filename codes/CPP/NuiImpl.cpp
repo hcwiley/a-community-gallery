@@ -233,7 +233,7 @@ void CSkeletalViewerApp::myInit(){
 	initDone = false;
 	scale = 1.0;
 	imgNum = 1;
-	person.present = 0;
+	person.present = -1;
 	person.left = -1;
 	person.right = -1;
 	curImage = new IMAGE;
@@ -242,15 +242,15 @@ void CSkeletalViewerApp::myInit(){
 	cvRectangle(bgImg,cvPoint(0,0),cvPoint(WIDTH, HEIGHT), cvScalar(255,255,255), CV_FILLED);
 	//tmpImg = cvCreateImage(cvSize(1280,1024),8,3);
 	curNum = -1;
-	sprintf(imagePath,"leftHand.jpg");
+	sprintf(imagePath,"leftHand.png");
 	leftHand = new IMAGE;
 	leftHand->pic = cvLoadImage(imagePath);
 	leftHand->opacity = 1;
-	sprintf(imagePath,"rightHand.jpg");
+	sprintf(imagePath,"rightHand.png");
 	rightHand = new IMAGE;
 	rightHand->opacity = 1;
 	rightHand->pic = cvLoadImage(imagePath);
-	sprintf(imagePath,"leftArrow.jpg");
+	sprintf(imagePath,"leftArrow.png");
 	leftArrow = new IMAGE;
 	leftArrow->pic = cvLoadImage(imagePath);
 	leftArrow->x(LEFT_ICON_X);
@@ -258,7 +258,7 @@ void CSkeletalViewerApp::myInit(){
 	leftArrow->width(LEFT_ICON_WIDTH);
 	leftArrow->height(LEFT_ICON_HEIGHT);
 	rightArrow = new IMAGE;
-	sprintf(imagePath,"rightArrow.jpg");
+	sprintf(imagePath,"rightArrow.png");
 	rightArrow->pic = cvLoadImage(imagePath);
 	rightArrow->x(RIGHT_ICON_X);
 	rightArrow->y(RIGHT_ICON_Y);
@@ -271,11 +271,11 @@ void CSkeletalViewerApp::myInit(){
 			images[j][i]->pic = cvLoadImage(imagePath);
 			IplImage* tmp = cvCreateImage(cvSize(images[j][i]->pic->width-BORDER, images[j][i]->pic->height-BORDER),8,3);
 			cvResize(images[j][i]->pic, tmp);
-			cvRectangle(images[j][i]->pic, cvPoint(0,0),cvPoint(images[j][i]->pic->width, images[j][i]->pic->height), cvScalar(0,0,0), CV_FILLED);
+			cvRectangle(images[j][i]->pic, cvPoint(0,0),cvPoint(images[j][i]->pic->width, images[j][i]->pic->height), cvScalar(255,255,255), CV_FILLED);
 			cvOverlayImage(images[j][i]->pic, tmp, cvPoint(BORDER/2,BORDER/2), .8, .8);
 			cvReleaseImage(&tmp);
-			images[j][i]->x(180+(i*(IMG_WIDTH + 20)));
-			images[j][i]->y(20);
+			images[j][i]->x(400+(i*(IMG_WIDTH + 20)));
+			images[j][i]->y(40);
 			images[j][i]->width(IMG_WIDTH);
 			images[j][i]->height(IMG_HEIGHT);
 			images[j][i]->imgNum = i;
@@ -291,6 +291,7 @@ void CSkeletalViewerApp::myInit(){
 	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 1.3, 1.3, (0,0), 2);
 	bgImg0 = cvCloneImage(bgImg);
 	newBg(-1);
+	person.number = 0;
 	cvShowImage("virtual gallery",bgImg0);
 	//curImage = images1[0];
 	initDone = true;
@@ -522,36 +523,11 @@ void CSkeletalViewerApp::Nui_GotDepthAlert( )
             for( int x = 0 ; x < 320 ; x++ )
             {
                 RGBQUAD quad = Nui_ShortToQuad_Depth( *pBufferRun );
-				if( person.present == 1){
-					if(person.left == -1){
-						if(person.top == -1)
-							person.top = y;
-						person.left = x;
-					}
-					person.right = x;
-					person.bottom = y;
-				}
                 pBufferRun++;
                 *rgbrun = quad;
                 rgbrun++;
             }
         }
-		if(person.left != -1){
-			//sprintf(text, "distance: %f",person.distance);
-			//cvRectangle(curImage,cvPoint(0,0),cvPoint(600,200), cvScalar(255,255,255), 30);
-			//cvPutText(curImage, text,cvPoint(100,100),&font,cvScalar(0,0,255));
-			if(abs(person.x()  - 160) > 40)
-				dir = int((160 - person.x()) / 40);
-		}
-		person.present = -1;
-		person.left = -1;
-		person.right = -1;
-		person.top = -1;
-		person.bottom = -1;
-
-		//int c = cvWaitKey(10); //<-- this will block for 10 ms
-		//if(c == 27)
-
         m_DrawDepth.DrawFrame( (BYTE*) m_rgbWk );
     }
     else
@@ -605,7 +581,7 @@ void CSkeletalViewerApp::watchSkeleton(){
 		scale = abs(person.rx);
 		scale /= WIDTH/2;
 		scale += 1.0;
-		sprintf(text,"%f",person.distance);
+		sprintf(text,"%f   %i",person.distance, person.number);
 		if( scale <= .8)
 			scale = .8;
 		if( scale > 3)
@@ -619,7 +595,7 @@ void CSkeletalViewerApp::watchSkeleton(){
 			leftHand->opacity = 1.0;
 			rightHand->opacity = 1.0;
 			for(int i=0; i< numImages; i++){
-				if(images[gallery][i]->over(x,y)){
+				if(images[gallery][i]->over(person.lx,person.ly) && images[gallery][i]->over(person.rx,person.ry)){
 					if(curImage->_width > 0){
 						copyImage(lastImage, curImage);
 						lastImage->x(lastImage->_x0);
@@ -776,7 +752,10 @@ void CSkeletalViewerApp::Nui_DrawSkeleton( bool bBlank, NUI_SKELETON_DATA * pSke
         m_Points[i].y = (int) ( fy * scaleY + 0.5f );
     }
 
-    SelectObject(m_SkeletonDC,m_Pen[WhichSkeletonColor%m_PensTotal]);
+	//if (WhichSkeletonColor != person.number)
+		//return;
+
+	SelectObject(m_SkeletonDC,m_Pen[0]);
     
     Nui_DrawSkeletonSegment(pSkel,4,NUI_SKELETON_POSITION_HIP_CENTER, NUI_SKELETON_POSITION_SPINE, NUI_SKELETON_POSITION_SHOULDER_CENTER, NUI_SKELETON_POSITION_HEAD);
     Nui_DrawSkeletonSegment(pSkel,5,NUI_SKELETON_POSITION_SHOULDER_CENTER, NUI_SKELETON_POSITION_SHOULDER_LEFT, NUI_SKELETON_POSITION_ELBOW_LEFT, NUI_SKELETON_POSITION_WRIST_LEFT, NUI_SKELETON_POSITION_HAND_LEFT);
@@ -796,6 +775,7 @@ void CSkeletalViewerApp::Nui_DrawSkeleton( bool bBlank, NUI_SKELETON_DATA * pSke
 		}
 		else if(i == 11){
 			person.rightHand(m_Points[i].x, m_Points[i].y);
+			watchSkeleton();
 		}
         hOldObj=SelectObject(m_SkeletonDC,hJointPen);
 
@@ -837,7 +817,7 @@ void CSkeletalViewerApp::Nui_GotSkeletonAlert( )
     bool bFoundSkeleton = true;
     for( int i = 0 ; i < NUI_SKELETON_COUNT ; i++ )
     {
-        if( SkeletonFrame.SkeletonData[i].eTrackingState == NUI_SKELETON_TRACKED )
+        if( SkeletonFrame.SkeletonData[i].eTrackingState == NUI_SKELETON_TRACKED)
         {
             bFoundSkeleton = false;
         }
@@ -860,13 +840,16 @@ void CSkeletalViewerApp::Nui_GotSkeletonAlert( )
     // draw each skeleton color according to the slot within they are found.
     //
     bool bBlank = true;
-    for( int i = 0 ; i < NUI_SKELETON_COUNT ; i++ )
+    for( int i = 0 ; i < 7 ; i++ )
     {
-        if( SkeletonFrame.SkeletonData[i].eTrackingState == NUI_SKELETON_TRACKED )
+        if( SkeletonFrame.SkeletonData[i].eTrackingState == NUI_SKELETON_TRACKED)
         {
-            Nui_DrawSkeleton( bBlank, &SkeletonFrame.SkeletonData[i], GetDlgItem( m_hWnd, IDC_SKELETALVIEW ), i );
-            bBlank = false;
-        }
+			if(SkeletonFrame.SkeletonData[i].Position.x > -0.5 && SkeletonFrame.SkeletonData[i].Position.x < 0.5 && person.distance > thresh0 && person.distance < thresh3){
+				Nui_DrawSkeleton( bBlank, &SkeletonFrame.SkeletonData[i], GetDlgItem( m_hWnd, IDC_SKELETALVIEW ), i);
+				bBlank = false;
+				break;
+			}
+		}
     }
 
     Nui_DoDoubleBuffer(GetDlgItem(m_hWnd,IDC_SKELETALVIEW), m_SkeletonDC);
@@ -885,60 +868,27 @@ RGBQUAD CSkeletalViewerApp::Nui_ShortToQuad_Depth( USHORT s )
 
     RGBQUAD q;
     q.rgbRed = q.rgbBlue = q.rgbGreen = 0;
-	person.present = 0;
-    switch( Player )
-    {
-    case 0:
-        q.rgbRed = l / 2;
-        q.rgbBlue = l / 2;
-        q.rgbGreen = l / 2;
-		person.present = 0;
-        break;
-    case 1:
-        q.rgbRed = l;
-		person.present = 1;
-		person.color = cvScalar(q.rgbRed, q.rgbGreen, q.rgbBlue);
-        break;
-    case 2:
-        q.rgbGreen = l;
-		person.present = 1;
-		person.color = cvScalar(q.rgbRed, q.rgbGreen, q.rgbBlue);
-        break;
-    case 3:
-        q.rgbRed = l / 4;
-        q.rgbGreen = l;
-        q.rgbBlue = l;
-		person.present = 1;
-		person.color = cvScalar(q.rgbRed, q.rgbGreen, q.rgbBlue);
-        break;
-    case 4:
-        q.rgbRed = l;
-        q.rgbGreen = l;
-        q.rgbBlue = l / 4;
-		person.present = 1;
-		person.color = cvScalar(q.rgbRed, q.rgbGreen, q.rgbBlue);
-        break;
-    case 5:
-        q.rgbRed = l;
-        q.rgbGreen = l / 4;
-        q.rgbBlue = l;
-		person.present = 1;
-		person.color = cvScalar(q.rgbRed, q.rgbGreen, q.rgbBlue);
-        break;
-    case 6:
-        q.rgbRed = l / 2;
-        q.rgbGreen = l / 2;
-        q.rgbBlue = l;
-		person.present = 1;
-		person.color = cvScalar(q.rgbRed, q.rgbGreen, q.rgbBlue);
-        break;
-    case 7:
-        q.rgbRed = 255 - ( l / 2 );
-        q.rgbGreen = 255 - ( l / 2 );
-        q.rgbBlue = 255 - ( l / 2 );
-		person.present = 0;
-    }
-	if(person.present == 1)
+	if (Player > 0 && Player < 7){
+		int i = 0;
+	}
+	if(person.present == 1 && Player == person.number){
+		q.rgbRed = 0;
+        q.rgbBlue = 1;
+        q.rgbGreen = 0;
 		person.distance = RealDepth;
+	}
+	else{
+		if (Player > 0 && Player < 7){
+			person.number = Player;
+			person.present = 1;
+			q.rgbRed = 1;
+			q.rgbBlue = 0;
+			q.rgbGreen = 0;
+			person.distance = RealDepth;
+		}
+		else{
+			person.present = -1;
+		}
+	}
     return q;
 }
