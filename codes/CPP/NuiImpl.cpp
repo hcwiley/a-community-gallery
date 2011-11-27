@@ -283,7 +283,7 @@ void CSkeletalViewerApp::myInit(){
 	rightArrow->height(RIGHT_ICON_HEIGHT);
 	for(int j = 0; j < numGalleries; j++){
 		for(int i = 0; i < numImages; i++){
-			sprintf(imagePath,"..\\camera%d\\%d.jpg", j+1, i+1);
+			sprintf(imagePath,"..\\gallery%d\\%d.jpg", j+1, i+1);
 			images[j][i] = new IMAGE;
 			images[j][i]->pic = cvLoadImage(imagePath);
 			IplImage* tmp = cvCreateImage(cvSize(images[j][i]->pic->width-BORDER, images[j][i]->pic->height-BORDER),8,3);
@@ -291,22 +291,80 @@ void CSkeletalViewerApp::myInit(){
 			cvRectangle(images[j][i]->pic, cvPoint(0,0),cvPoint(images[j][i]->pic->width, images[j][i]->pic->height), cvScalar(255,255,255), CV_FILLED);
 			cvOverlayImage(images[j][i]->pic, tmp, cvPoint(BORDER/2,BORDER/2), .8, .8);
 			cvReleaseImage(&tmp);
-			images[j][i]->x(300+(i*(IMG_WIDTH + 100)));
+			images[j][i]->x(IMAGE_START_X +(i*(IMG_WIDTH + 100)));
 			images[j][i]->y(40);
 			images[j][i]->width(IMG_WIDTH);
 			images[j][i]->height(IMG_HEIGHT);
 			images[j][i]->imgNum = i;
 			images[j][i]->galNum = j;
-			int length;
-			sprintf(imagePath,"..\\camera%d\\%d-title.txt", j+1, i+1);
+			/*
+			int length, length2;
 			ifstream is;
-			is.open (imagePath);
-			is.seekg (0, ios::end);
+			char tmpC[D_LENGTH];
+			sprintf(imagePath,"..\\gallery%d\\%d-title.txt", j+1, i+1);
+			is.open(imagePath);
+			is.seekg(0, ios::end);
 			length = is.tellg();
-			images[j][i]->title = new char [length];
 			is.seekg (0, ios::beg);
-			is.read(images[j][i]->title, length);
+			is.read(tmpC, length);
 			is.close();
+			for(int c=0; c < length; c++){
+				if((tmpC[c] >= 32 && tmpC[c] <= 57) || (tmpC[c] >= 97 && tmpC[c] <= 122))
+					length2 = c;
+			}
+			delete(images[j][i]->title);
+			images[j][i]->title = &(new char[length2]);
+			for(int c=0; c < length2; c++){
+				if((tmpC[c] >= 32 && tmpC[c] <= 57) || (tmpC[c] >= 97 && tmpC[c] <= 122))
+					images[j][i]->title[c] = tmpC[c];
+				tmpC[c] = ' ';
+			}
+			sprintf(imagePath,"..\\gallery%d\\%d-artist.txt", j+1, i+1);
+			is.open(imagePath);
+			is.seekg(0, ios::end);
+			length = is.tellg();
+			is.seekg (0, ios::beg);
+			images[j][i]->artist = new char [length];
+			is.read(tmpC, length);
+			is.close();
+			for(int c=0; c < length; c++){
+				if(tmpC[c] >= 32 && tmpC[c] <= 127)
+					images[j][i]->artist[c] = tmpC[c];
+				else
+					images[j][i]->artist[c] = ' ';
+				tmpC[c] = char(0);
+			}
+			sprintf(imagePath,"..\\gallery%d\\%d-materials.txt", j+1, i+1);
+			is.open(imagePath);
+			is.seekg(0, ios::end);
+			length = is.tellg();
+			is.seekg (0, ios::beg);
+			images[j][i]->materials = new char [length];
+			is.read(tmpC, length);
+			is.close();
+			for(int c=0; c < length; c++){
+				if(tmpC[c] >= 32 && tmpC[c] <= 127)
+					images[j][i]->materials[c] = tmpC[c];
+				else
+					images[j][i]->materials[c] = ' ';
+				tmpC[c] = char(0);
+			}
+			sprintf(imagePath,"..\\gallery%d\\%d-year.txt", j+1, i+1);
+			is.open (imagePath);
+			is.seekg(0, ios::end);
+			length = is.tellg();
+			is.seekg(0, ios::beg);
+			images[j][i]->year = new char [length];
+			is.read(tmpC, length);
+			is.close();
+			for(int c=0; c < length; c++){
+				if(tmpC[c] >= 32 && tmpC[c] <= 127)
+					images[j][i]->year[c] = tmpC[c];
+				else
+					images[j][i]->year[c] = ' ';
+				tmpC[c] = char(0);
+			}
+			*/
 		}
 	}
 	gallery = 0;
@@ -318,6 +376,8 @@ void CSkeletalViewerApp::myInit(){
 	bgImg0 = cvCloneImage(bgImg);
 	newBg(-1);
 	person.number = 0;
+	person.lry = 5;
+	person.rry = 5;
 	sprintf(helpText1 , "Step forward to grab an image");
 	sprintf(helpText2 , "");
 	CvSize tmp;
@@ -335,15 +395,26 @@ void CSkeletalViewerApp::newBg(int not){
 	if(not == -1 || not != curNum){
 		cvRectangle(bgImg0,cvPoint(0,0),cvPoint(WIDTH, HEIGHT), cvScalar(255,255,255), CV_FILLED);
 		for(int i = 0; i < numImages; i++){
+			int length, x;
+			ifstream is;
+			sprintf(imagePath,"..\\gallery%d\\%d-title.txt", gallery+1, i+1);
+			is.open(imagePath);
+			is.seekg(0, ios::end);
+			length = is.tellg();
+			is.seekg (0, ios::beg);
+			char* tmpC = new char[length+1];
+			//is.read(tmpC, length);
+			is.getline(tmpC, length);
+			is.close();
 			if(i!=not){
 				tmpImg = cvCreateImage(cvSize(IMG_WIDTH, IMG_HEIGHT),8,3);
 				cvResize(images[gallery][i]->pic, tmpImg, 1);
 				cvOverlayImage(bgImg0, tmpImg, cvPoint(images[gallery][i]->_x0, images[gallery][i]->_y0),0.2, 0.4);
 				CvSize tmp;
 				int base;
-				cvGetTextSize(images[gallery][i]->title, &titleSmall, &tmp, &base);
+				cvGetTextSize(tmpC, &titleSmall, &tmp, &base);
 				int x = images[gallery][i]->_x0 + (images[gallery][i]->_width / 2) - tmp.width/2; 
-				cvPutText(bgImg0, images[gallery][i]->title,cvPoint(x, images[gallery][i]->_y0 + images[gallery][i]->_height + 20),&titleSmall,cvScalar(0,0,0));
+				cvPutText(bgImg0, tmpC,cvPoint(x, images[gallery][i]->_y0 + images[gallery][i]->_height + 20),&titleSmall,cvScalar(0,0,0));
 				cvReleaseImage(&tmpImg);
 			}
 			else{
@@ -352,9 +423,9 @@ void CSkeletalViewerApp::newBg(int not){
 				cvOverlayImage(bgImg0, tmpImg, cvPoint(images[gallery][i]->_x0, images[gallery][i]->_y0),1, 1);
 				CvSize tmp;
 				int base;
-				cvGetTextSize(images[gallery][i]->title, &titleSmall, &tmp, &base);
+				cvGetTextSize(tmpC, &titleSmall, &tmp, &base);
 				int x = images[gallery][i]->_x0 + (images[gallery][i]->_width / 2) - tmp.width/2; 
-				cvPutText(bgImg0, images[gallery][i]->title,cvPoint(x, images[gallery][i]->_y0 + images[gallery][i]->_height + 20),&titleSmall,cvScalar(0,0,0));
+				cvPutText(bgImg0, tmpC,cvPoint(x, images[gallery][i]->_y0 + images[gallery][i]->_height + 20),&titleSmall,cvScalar(0,0,0));
 				cvReleaseImage(&tmpImg);
 			}
 		}
@@ -417,14 +488,14 @@ void CSkeletalViewerApp::copyImage(IMAGE* dst, IMAGE* src){
 	dst->height(src->_height);
 	dst->galNum = src->galNum;
 	dst->imgNum = src->imgNum;
-	dst->title = src->title;
+	//dst->title = src->title;
 	//dst->artist = src->artist;
 	//dst->year = src->year;
 	//dst->materials = src->materials;
 	// TO DO get info dynamically
 	/*
 	ifstream is;
-	sprintf(imagePath,"..\\camera%d\\%d-artist.txt", j+1, i+1);
+	sprintf(imagePath,"..\\gallery%d\\%d-artist.txt", j+1, i+1);
 	is.open (imagePath);
 	is.seekg (0, ios::end);
 	length = is.tellg();
@@ -443,7 +514,7 @@ void CSkeletalViewerApp::copyImage(IMAGE* dst, IMAGE* src){
 		int col = c - (row * D_LENGTH);
 		images[j][i]->description[row][col] = d[c];
 	}
-	sprintf(imagePath,"..\\camera%d\\%d-year.txt", j+1, i+1);
+	sprintf(imagePath,"..\\gallery%d\\%d-year.txt", j+1, i+1);
 	is.open (imagePath);
 	is.seekg (0, ios::end);
 	length = is.tellg();
@@ -451,7 +522,7 @@ void CSkeletalViewerApp::copyImage(IMAGE* dst, IMAGE* src){
 	images[j][i]->year = new char [length];
 	is.read(images[j][i]->year, length);
 	is.close();
-	sprintf(imagePath,"..\\camera%d\\%d-materials.txt", j+1, i+1);
+	sprintf(imagePath,"..\\gallery%d\\%d-materials.txt", j+1, i+1);
 	is.open (imagePath);
 	is.seekg (0, ios::end);
 	length = is.tellg();
@@ -801,7 +872,7 @@ void CSkeletalViewerApp::watchSkeleton(){
 			cvPutText(bgImg, curImage->description[1],cvPoint(x,y),&p,cvScalar(0,0,0));
 		}
 		if( person.distance < thresh1){
-			cvRectangle(bgImg,cvPoint(400,HELP_TEXT_Y - 200),cvPoint(WIDTH - 400,HELP_TEXT_Y + 200), cvScalar(255,255,255), CV_FILLED);
+			cvRectangle(bgImg,cvPoint(LEFT_ICON_X + LEFT_ICON_WIDTH + 20,HELP_TEXT_Y - 200),cvPoint(RIGHT_ICON_X - 20,HELP_TEXT_Y + 200), cvScalar(255,255,255), CV_FILLED);
 			sprintf(helpText1 , "Put your hand over an image");
 			sprintf(helpText2 , "Step back to grab it off the wall");
 			CvSize tmp;
@@ -824,6 +895,23 @@ void CSkeletalViewerApp::watchSkeleton(){
 			rightHand->y(person.ry - (rightHand->_height / 2));
 			cvOverlayImage(bgImg, leftHand->pic, cvPoint(leftHand->_x, leftHand->_y), 1,leftHand->opacity);
 			cvOverlayImage(bgImg, rightHand->pic, cvPoint(rightHand->_x, rightHand->_y), 1,rightHand->opacity);
+		}
+		if( (person.lry < 0 || person.rry < 0) && person.distance < thresh2){
+			cvRectangle(bgImg,cvPoint(LEFT_ICON_X + LEFT_ICON_WIDTH + 20,HELP_TEXT_Y - 200),cvPoint(RIGHT_ICON_X - 20,HELP_TEXT_Y + 200), cvScalar(255,255,255), CV_FILLED);
+			sprintf(helpText1 , "Your hands are too high");
+			sprintf(helpText2 , "Lower them slowly till the hands respond");
+			CvSize tmp;
+			int base;
+			cvGetTextSize(helpText1, &font, &tmp, &base);
+			int x = HELP_TEXT_X - tmp.width/2;
+			int y = HELP_TEXT_Y - tmp.height / 2 - 10;
+			cvPutText(bgImg, helpText1,cvPoint(x,y),&font, cvScalar(217,149,0));
+			cvGetTextSize(helpText2, &font, &tmp, &base);
+			x = HELP_TEXT_X - tmp.width/2;
+			y = HELP_TEXT_Y + tmp.height / 2  + 10;
+			cvPutText(bgImg, helpText2,cvPoint(x,y),&font, cvScalar(217,149,0));
+			leftHand->pic = leftFull;
+			rightHand->pic = rightFull;
 		}
 		cvShowImage("virtual gallery",bgImg);
 	}

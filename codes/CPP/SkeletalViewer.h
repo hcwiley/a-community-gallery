@@ -60,10 +60,10 @@ public:
 		int _y0;
 		int _width;
 		int _height;
-		char* title;
-		char* artist;
-		char* materials;
-		char* year;
+		char title[D_LENGTH];
+		char artist[D_LENGTH];
+		char materials[D_LENGTH];
+		char year[D_LENGTH];
 		char description[4][D_LENGTH];
 
 		int x(int x=0){
@@ -123,8 +123,10 @@ public:
 		int _area;
 		int lx;
 		int ly;
+		int lry;
 		int rx;
 		int ry;
+		int rry;
 		float distance;
 		CvScalar color;
 		int present;
@@ -134,6 +136,7 @@ public:
 				lx = x * (WIDTH/ K_WIDTH);
 				ly = y * (HEIGHT/ K_HEIGHT);
 			}
+			lry = y;
 			if (lx < 0)
 				lx = 0;
 			if (ly < 0)
@@ -144,6 +147,7 @@ public:
 				rx = x * (WIDTH/ K_WIDTH);
 				ry = y * (HEIGHT/ K_HEIGHT);
 			}
+			rry = y;
 			if (rx < 0)
 				rx = 0;
 			if (ry < 0)
@@ -215,17 +219,18 @@ private:
 	int imgNum;
 	char imagePath[20];
 	static const int numImages = 4;
-	static const int numGalleries = 3;
+	static const int numGalleries = 2;
 	int dir;
 	int gotPerson;
 	bool initDone;
 	PERSON person;
 	static const int IMG_WIDTH = 200;
 	static const int IMG_HEIGHT = 180;
-	static const int WIDTH = 1680;
-	static const int HEIGHT = 1050;
+	static const int WIDTH = 1600;
+	static const int HEIGHT = 1200;
 	static const int K_WIDTH = 320;
 	static const int K_HEIGHT = 240;
+	static const int IMAGE_START_X = (WIDTH / 2) - (numImages * IMG_WIDTH + 100) / 2;
 	IMAGE* images[numGalleries][numImages];
 	//IMAGE*  images2[numImages];
 	//IMAGE*  images3[numImages];
@@ -277,10 +282,10 @@ private:
 	static const int INFO_BOX_HEIGHT = IMG_HEIGHT + 30;
 	static const int HELP_TEXT_X = WIDTH / 2 ;
 	static const int HELP_TEXT_Y = HEIGHT / 2;
-	static const int thresh0 = 2200;
-	static const int thresh1 = 2550;
-	static const int thresh2 = 3050;
-	static const int thresh3 = 3200;
+	static const int thresh0 = 1650;
+	static const int thresh1 = 1850;
+	static const int thresh2 = 2400;
+	static const int thresh3 = 2650;
 	static const int thresh4 = 3800;
 };
 
