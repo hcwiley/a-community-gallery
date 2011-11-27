@@ -42,7 +42,7 @@ public:
     RGBQUAD                 Nui_ShortToQuad_Depth( USHORT s );
 
     static LONG CALLBACK    WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-	static const int D_LENGTH = 70;
+	static const int D_LENGTH = 100;
     HWND m_hWnd;
 
 	struct IMAGE{
@@ -60,11 +60,11 @@ public:
 		int _y0;
 		int _width;
 		int _height;
-		char title[D_LENGTH];
-		char artist[D_LENGTH];
-		char materials[D_LENGTH];
-		char year[D_LENGTH];
-		char description[4][D_LENGTH];
+		char* title;
+		char* artist;
+		char* materials;
+		char* year;
+		//char** description;
 
 		int x(int x=0){
 			if(x){
@@ -278,7 +278,7 @@ private:
 	static const int RIGHT_ICON_Y = HEIGHT / 2 - RIGHT_ICON_HEIGHT/2;
 	static const int INFO_BOX_X = 200;
 	static const int INFO_BOX_Y = 35;
-	static const int INFO_BOX_WIDTH = WIDTH - 400;
+	static const int INFO_BOX_WIDTH = WIDTH - 200;
 	static const int INFO_BOX_HEIGHT = IMG_HEIGHT + 30;
 	static const int HELP_TEXT_X = WIDTH / 2 ;
 	static const int HELP_TEXT_Y = HEIGHT / 2;
