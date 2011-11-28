@@ -42,7 +42,7 @@ public:
     RGBQUAD                 Nui_ShortToQuad_Depth( USHORT s );
 
     static LONG CALLBACK    WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-	static const int D_LENGTH = 100;
+	static const int D_LENGTH = 400;
     HWND m_hWnd;
 
 	struct IMAGE{
@@ -97,8 +97,8 @@ public:
 			return _height;
 		};
 		bool over(int x, int y){
-			if(x > _x && x < _x + _width){
-				if(y > _y && y < _y + _height)
+			if(x > _x - 5 && x < _x + _width + 5){
+				if(y > _y -5 && y < _y + _height +5)
 					return true;
 			}
 			return false;
@@ -127,6 +127,7 @@ public:
 		int rx;
 		int ry;
 		int rry;
+		double scale;
 		float distance;
 		CvScalar color;
 		int present;
@@ -226,11 +227,11 @@ private:
 	PERSON person;
 	static const int IMG_WIDTH = 200;
 	static const int IMG_HEIGHT = 180;
-	static const int WIDTH = 1600;
-	static const int HEIGHT = 1200;
+	static const int WIDTH = 1400;
+	static const int HEIGHT = 900;
 	static const int K_WIDTH = 320;
 	static const int K_HEIGHT = 240;
-	static const int IMAGE_START_X = (WIDTH / 2) - (numImages * IMG_WIDTH + 100) / 2;
+	static const int IMAGE_START_X = 160;
 	IMAGE* images[numGalleries][numImages];
 	//IMAGE*  images2[numImages];
 	//IMAGE*  images3[numImages];
@@ -258,7 +259,7 @@ private:
 	IMAGE* rightArrow;
 	static const int BORDER = 60;
 	int curNum;
-	time_t imageTimer, curTime;
+	time_t imageTimer, curTime, timeOut;
 	CvFont font;
 	CvFont titleSmall;
 	CvFont title;
@@ -269,23 +270,24 @@ private:
 	static const int RESET_X = 150;
 	static const int RESET_Y = HEIGHT - 220;
 	static const int LEFT_ICON_X = 150;
-	static const int LEFT_ICON_WIDTH = 85;
-	static const int LEFT_ICON_HEIGHT = 70;
+	static const int LEFT_ICON_WIDTH = 125;
+	static const int LEFT_ICON_HEIGHT = 120;
 	static const int LEFT_ICON_Y = HEIGHT / 2 - LEFT_ICON_HEIGHT/2;
 	static const int RIGHT_ICON_X= WIDTH - LEFT_ICON_X - LEFT_ICON_WIDTH;
 	static const int RIGHT_ICON_WIDTH = LEFT_ICON_WIDTH;
 	static const int RIGHT_ICON_HEIGHT = LEFT_ICON_HEIGHT;
 	static const int RIGHT_ICON_Y = HEIGHT / 2 - RIGHT_ICON_HEIGHT/2;
-	static const int INFO_BOX_X = 200;
+	static const int INFO_BOX_X = 100;
 	static const int INFO_BOX_Y = 35;
 	static const int INFO_BOX_WIDTH = WIDTH - 200;
 	static const int INFO_BOX_HEIGHT = IMG_HEIGHT + 30;
 	static const int HELP_TEXT_X = WIDTH / 2 ;
 	static const int HELP_TEXT_Y = HEIGHT / 2;
-	static const int thresh0 = 1650;
-	static const int thresh1 = 1850;
-	static const int thresh2 = 2400;
-	static const int thresh3 = 2650;
+	static const int timeOutDelay = 30;
+	static const int thresh0 = 1700;
+	static const int thresh1 = 2000;
+	static const int thresh2 = 2300;
+	static const int thresh3 = 2600;
 	static const int thresh4 = 3800;
 };
 
