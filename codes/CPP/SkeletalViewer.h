@@ -220,7 +220,7 @@ private:
 	int imgNum;
 	char imagePath[20];
 	static const int numImages = 4;
-	static const int numGalleries = 2;
+	static const int numGalleries = 8;
 	int dir;
 	int gotPerson;
 	bool initDone;

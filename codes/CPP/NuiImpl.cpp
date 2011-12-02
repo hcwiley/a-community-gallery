@@ -283,18 +283,31 @@ void CSkeletalViewerApp::myInit(){
 	rightArrow->height(rightArrow->pic->height);
 	for(int j = 0; j < numGalleries; j++){
 		for(int i = 0; i < numImages; i++){
+			ifstream test;
+			sprintf(imagePath,"..\\gallery%d\\%d-title.txt", j+1, i+1);
+			test.open(imagePath);
+			if(!test.good()){
+				test.close();
+				images[j][i] = new IMAGE;
+				images[j][i]->pic = cvCreateImage(cvSize(1,1),8,3);
+				images[j][i]->width(-1);
+				images[j][i]->height(-1);
+				break;
+			}
+			else
+				test.close();
 			sprintf(imagePath,"..\\gallery%d\\%d.jpg", j+1, i+1);
 			images[j][i] = new IMAGE;
 			images[j][i]->pic = cvLoadImage(imagePath);
-			IplImage* tmp = cvCreateImage(cvSize(images[j][i]->pic->width-BORDER, images[j][i]->pic->height-BORDER),8,3);
-			cvResize(images[j][i]->pic, tmp);
-			cvRectangle(images[j][i]->pic, cvPoint(0,0),cvPoint(images[j][i]->pic->width, images[j][i]->pic->height), cvScalar(255,255,255), CV_FILLED);
-			cvOverlayImage(images[j][i]->pic, tmp, cvPoint(BORDER/2,BORDER/2), .8, .8);
-			cvReleaseImage(&tmp);
+			//IplImage* tmp = cvCreateImage(cvSize(images[j][i]->pic->width-BORDER, images[j][i]->pic->height-BORDER),8,3);
+			//cvResize(images[j][i]->pic, tmp);
+			images[j][i]->width(images[j][i]->pic->width);
+			images[j][i]->height(images[j][i]->pic->height);
+			//cvRectangle(images[j][i]->pic, cvPoint(0,0),cvPoint(images[j][i]->pic->width, images[j][i]->pic->height), cvScalar(255,255,255), CV_FILLED);
+			//cvOverlayImage(images[j][i]->pic, tmp, cvPoint(BORDER/2,BORDER/2), .8, .8);
+			//cvReleaseImage(&tmp);
 			images[j][i]->x(IMAGE_START_X +(i*(IMG_WIDTH + 100)));
 			images[j][i]->y(40);
-			images[j][i]->width(IMG_WIDTH);
-			images[j][i]->height(IMG_HEIGHT);
 			images[j][i]->imgNum = i;
 			images[j][i]->galNum = j;
 			int length;
@@ -357,7 +370,7 @@ void CSkeletalViewerApp::myInit(){
 	person.number = 0;
 	person.lry = 5;
 	person.rry = 5;
-	sprintf(helpText1 , "Step forward to grab an image");
+	sprintf(helpText1 , "Step forward to GRAB an image");
 	sprintf(helpText2 , "");
 	CvSize tmp;
 	int base;
@@ -375,15 +388,17 @@ void CSkeletalViewerApp::newBg(int not){
 	if(not == -1 || not != curNum){
 		cvRectangle(bgImg0,cvPoint(0,0),cvPoint(WIDTH, HEIGHT), cvScalar(255,255,255), CV_FILLED);
 		for(int i = 0; i < numImages; i++){
+			if(images[gallery][i]->_width < 0)
+				break;
 			if(i!=not){
 				tmpImg = cvCreateImage(cvSize(IMG_WIDTH, IMG_HEIGHT),8,3);
 				cvResize(images[gallery][i]->pic, tmpImg, 1);
-				cvOverlayImage(bgImg0, tmpImg, cvPoint(images[gallery][i]->_x0, images[gallery][i]->_y0),0.2, 0.4);
+				cvOverlayImage(bgImg0, tmpImg, cvPoint(images[gallery][i]->_x0, images[gallery][i]->_y0),0.8, 0.3);
 				CvSize tmp;
 				int base;
 				cvGetTextSize(images[gallery][i]->title, &titleSmall, &tmp, &base);
-				int x = images[gallery][i]->_x0 + (images[gallery][i]->_width / 2) - tmp.width/2; 
-				cvPutText(bgImg0, images[gallery][i]->title,cvPoint(x, images[gallery][i]->_y0 + images[gallery][i]->_height + 20),&titleSmall,cvScalar(0,0,0));
+				int x = images[gallery][i]->_x0 + (IMG_HEIGHT / 2) - tmp.width/2; 
+				cvPutText(bgImg0, images[gallery][i]->title,cvPoint(x, images[gallery][i]->_y0 + IMG_HEIGHT + 20),&titleSmall,cvScalar(0,0,0));
 				cvReleaseImage(&tmpImg);
 			}
 			else{
@@ -393,8 +408,8 @@ void CSkeletalViewerApp::newBg(int not){
 				CvSize tmp;
 				int base;
 				cvGetTextSize(images[gallery][i]->title, &titleSmall, &tmp, &base);
-				int x = images[gallery][i]->_x0 + (images[gallery][i]->_width / 2) - tmp.width/2; 
-				cvPutText(bgImg0, images[gallery][i]->title,cvPoint(x, images[gallery][i]->_y0 + images[gallery][i]->_height + 20),&titleSmall,cvScalar(0,0,0));
+				int x = images[gallery][i]->_x0 + (IMG_HEIGHT / 2) - tmp.width/2; 
+				cvPutText(bgImg0, images[gallery][i]->title,cvPoint(x, images[gallery][i]->_y0 + IMG_HEIGHT + 20),&titleSmall,cvScalar(0,0,0));
 				cvReleaseImage(&tmpImg);
 			}
 		}
@@ -430,7 +445,7 @@ void  CSkeletalViewerApp::cvOverlayImage(IplImage* src, IplImage* overlay, CvPoi
 	int w = overlay->width;
 	int h = overlay->height;
 	IplImage* tmp = cvCreateImage(cvSize(w,h),8,3);
-	cvRectangle(tmp, cvPoint(0,0),cvPoint(w,h), cvScalar(255,255,255), CV_FILLED);
+	cvRectangle(tmp, cvPoint(0,0),cvPoint(w,h), cvScalar(255*S,255*S,255*S), CV_FILLED);
 	cvAddWeighted(overlay,D,tmp,1-D,0.0,tmp);
 	for(x=0;x < tmp->width;x++)
 	{
@@ -451,20 +466,22 @@ void  CSkeletalViewerApp::cvOverlayImage(IplImage* src, IplImage* overlay, CvPoi
 }
 
 void CSkeletalViewerApp::copyImage(IMAGE* dst, IMAGE* src){
-	if(dst->_width > 0)
-		cvReleaseImage(&(dst->pic));
-	dst->pic = cvCloneImage(src->pic);
-	dst->x(src->_x);
-	dst->y(src->_y);
-	dst->width(src->_width);
-	dst->height(src->_height);
-	dst->galNum = src->galNum;
-	dst->imgNum = src->imgNum;
-	dst->title = src->title;
-	dst->artist = src->artist;
-	dst->year = src->year;
-	dst->materials = src->materials;
-	/*
+	if(src->_width > 0){
+		if(dst->_width > 0)
+			cvReleaseImage(&(dst->pic));
+		dst->pic = cvCloneImage(src->pic);
+		dst->x(src->_x);
+		dst->y(src->_y);
+		dst->width(src->_width);
+		dst->height(src->_height);
+		dst->galNum = src->galNum;
+		dst->imgNum = src->imgNum;
+		dst->title = src->title;
+		dst->artist = src->artist;
+		dst->year = src->year;
+		dst->materials = src->materials;
+	}
+		/*
 	dst->description[0]= src->description[0];
 	dst->description[1]= src->description[1];
 	dst->description[2]= src->description[2];
@@ -685,14 +702,15 @@ void CSkeletalViewerApp::watchSkeleton(){
 		x = person.lx;
 		y = person.ly;
 		if(person.distance < thresh1){
-			leftHand->pic = leftFull;
-			rightHand->pic = rightFull;
+			leftHand->pic = leftGreen;
+			rightHand->pic = rightGreen;
 			for(int i=0; i< numImages; i++){
+				if(images[gallery][i]->_width < 0)
+					break;
 				bool left = images[gallery][i]->over(person.lx,person.ly);
 				bool right = images[gallery][i]->over(person.rx,person.ry);
 				if(left || right){
 					if(left)
-						leftHand->pic = leftGreen;
 					if(right)
 						rightHand->pic = rightGreen;
 					if(curImage->_width > 0){
@@ -704,7 +722,7 @@ void CSkeletalViewerApp::watchSkeleton(){
 					newBg(i);
 				}
 			}
-			if(time(&curTime) - imageTimer > 0.09){
+			if(time(&curTime) - imageTimer > 0.2){
 				time(&imageTimer);
 				bool left = leftArrow->over(person.lx,person.ly);
 				bool right = leftArrow->over(person.rx,person.ry);
@@ -734,12 +752,12 @@ void CSkeletalViewerApp::watchSkeleton(){
 			if(curImage->_width > 0){
 				//if(time(&curTime) - imageTimer > 0.01){
 					//time(&imageTimer);
-					float w = IMG_WIDTH * scale;
+					float w = IMG_WIDTH * scale;                               
 					float h = IMG_HEIGHT * scale;
 					w = person.rx - person.lx;
 					w *= 1.2;
-					scale = double(w / IMG_WIDTH);
-					h = IMG_HEIGHT * scale;
+					scale = double(w / curImage->_width);
+					h = curImage->_height * scale;
 					if(w >= WIDTH)
 						w = WIDTH;
 					//if(h >= HEIGHT)
@@ -827,7 +845,7 @@ void CSkeletalViewerApp::watchSkeleton(){
 		else if( person.distance < thresh1){
 			cvRectangle(bgImg,cvPoint(LEFT_ICON_X + LEFT_ICON_WIDTH + 20,HELP_TEXT_Y - 200),cvPoint(RIGHT_ICON_X - 20,HELP_TEXT_Y + 200), cvScalar(255,255,255), CV_FILLED);
 			sprintf(helpText1 , "Put your hand over an image");
-			sprintf(helpText2 , "Step back to grab it off the wall");
+			sprintf(helpText2 , "Step back to MOVE it off the wall");
 			CvSize tmp;
 			int base;
 			cvGetTextSize(helpText1, &font, &tmp, &base);
@@ -839,7 +857,7 @@ void CSkeletalViewerApp::watchSkeleton(){
 			y = HELP_TEXT_Y + tmp.height / 2  + 10;
 			cvPutText(bgImg, helpText2,cvPoint(x,y),&font, cvScalar(217,149,0));
 		}
-		if(person.distance > thresh1 && curNum != -1){
+		if(person.distance > thresh1 && curNum != -1 && curImage->_width > 0){
 				cvOverlayImage(bgImg, curImage->pic, cvPoint(curImage->_x,curImage->_y), 1, 1);
 			}
 		if( person.distance < thresh2){
@@ -871,33 +889,6 @@ void CSkeletalViewerApp::watchSkeleton(){
 	}
 }
 
-void CSkeletalViewerApp::changeImage(){
-		//cvRectangle(curImage,cvPoint(0,50),cvPoint(600,100), cvScalar(255,255,255), 40);
-		//cvPutText(curImage, text,cvPoint(100,100),&font,cvScalar(0,0,255));
-	/*
-		if( &curImage ){
-			int xs = normalD * 1280 * zoom;//.1;
-			int ys = normalD * 1024 * zoom;//.1;
-			tmpImg = cvCreateImage(cvSize(1280 + xs,1024 + ys),8,3);
-			cvResize(curImage, tmpImg, 1);
-			cvReleaseImage(&curImage);
-			curImage = cvCloneImage(tmpImg);
-			cvSetImageROI(curImage, cvRect(xs/2, ys/2, 1280, 1024));
-			cvReleaseImage(&tmpImg);
-			double alpha = 0;
-			double beta = 1;
-			float step = 1.0 / loop;
-			for(int i = 0; i < loop; i++){
-				cvAddWeighted(curImage, alpha, lastImage, beta, 0.0, alphaImg);
-				alpha += step;
-				beta -= step;
-				cvShowImage("virtual gallery", alphaImg);
-			}
-			cvShowImage("virtual gallery", curImage);
-		}
-	}
-	*/
-}
 
 void CSkeletalViewerApp::Nui_DrawSkeleton( bool bBlank, NUI_SKELETON_DATA * pSkel, HWND hWnd, int WhichSkeletonColor )
 {
@@ -1037,7 +1028,7 @@ void CSkeletalViewerApp::Nui_GotSkeletonAlert( )
     {
         if( SkeletonFrame.SkeletonData[i].eTrackingState == NUI_SKELETON_TRACKED)
         {
-			if(SkeletonFrame.SkeletonData[i].Position.x > -0.4 && SkeletonFrame.SkeletonData[i].Position.x < 0.4 && person.distance > thresh0 && person.distance < thresh3){
+			if(SkeletonFrame.SkeletonData[i].Position.x > -0.2 && SkeletonFrame.SkeletonData[i].Position.x < 0.2 && person.distance > thresh0 && person.distance < thresh3){
 				time(&timeOut);
 				person.present = 1;
 				Nui_DrawSkeleton( bBlank, &SkeletonFrame.SkeletonData[i], GetDlgItem( m_hWnd, IDC_SKELETALVIEW ), i);
