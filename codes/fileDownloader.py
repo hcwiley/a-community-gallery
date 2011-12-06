@@ -23,7 +23,7 @@ for line in lines:
     line = line.replace('\n','')
     if c == -1:
         c += 1
-        continue;
+        continue
     if c == 0:
         path = 'gallery%s' % directory
         name = line.split('/')
@@ -39,18 +39,21 @@ for line in lines:
         #image.close()
         c += 1
     elif c == 1:
+        c += 1
+        continue
+    elif c == 2:
         os.system("echo %s > %s/%s-title.txt" % (line, path, fileNum))
         c += 1
-    elif c == 2:
+    elif c == 3:
         os.system("echo %s > %s/%s-artist.txt" % (line, path, fileNum))
         c += 1
-    elif c == 3:
+    elif c == 4:
         os.system("echo %s > %s/%s-year.txt" % (line, path, fileNum))
         c += 1
-    elif c == 4:
+    elif c == 5:
         os.system("echo %s > %s/%s-materials.txt" % (line, path, fileNum))
         c += 1
-    elif c == 5:
+    elif c == 6:
         if de == '':
             de = open("%s/%s-description.txt" % (path, fileNum), "w")
         if line != '<<<EOF>>>':

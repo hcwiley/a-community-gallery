@@ -60,10 +60,10 @@ public:
 		int _y0;
 		int _width;
 		int _height;
-		char* title;
-		char* artist;
-		char* materials;
-		char* year;
+		char title[200];
+		char artist[200];
+		char materials[200];
+		char year[8];
 		//char** description;
 
 		int x(int x=0){
@@ -97,8 +97,14 @@ public:
 			return _height;
 		};
 		bool over(int x, int y){
-			if(x > _x - 5 && x < _x + _width + 5){
-				if(y > _y -5 && y < _y + _height +5)
+			int w= _width;
+			int h = _height;
+			if(w > 200)
+				w = IMG_WIDTH;
+			if(h > 200)
+				h = IMG_HEIGHT;
+			if(x > _x - 5 && x < _x + w + 5){
+				if(y > _y -5 && y < _y + h +5)
 					return true;
 			}
 			return false;
@@ -220,19 +226,20 @@ private:
 	int imgNum;
 	char imagePath[20];
 	static const int numImages = 4;
-	static const int numGalleries = 8;
+	static const int numGalleries = 9;
 	int dir;
 	int gotPerson;
 	bool initDone;
 	PERSON person;
 	static const int IMG_WIDTH = 200;
 	static const int IMG_HEIGHT = 180;
-	static const int WIDTH = 1400;
+	static const int WIDTH = 1440;
 	static const int HEIGHT = 900;
 	static const int K_WIDTH = 320;
 	static const int K_HEIGHT = 240;
 	static const int IMAGE_START_X = 160;
-	IMAGE* images[numGalleries][numImages];
+	//IMAGE* images[numGalleries][numImages];
+	IMAGE* images[numImages];
 	//IMAGE*  images2[numImages];
 	//IMAGE*  images3[numImages];
 	//IMAGE*  images4[numImages];
@@ -269,7 +276,7 @@ private:
 	static const bool showDistance = false;
 	static const int RESET_X = 150;
 	static const int RESET_Y = HEIGHT - 220;
-	static const int LEFT_ICON_X = 150;
+	static const int LEFT_ICON_X = 80;
 	static const int LEFT_ICON_WIDTH = 125;
 	static const int LEFT_ICON_HEIGHT = 120;
 	static const int LEFT_ICON_Y = HEIGHT / 2 - LEFT_ICON_HEIGHT/2;
@@ -285,8 +292,10 @@ private:
 	static const int HELP_TEXT_Y = HEIGHT / 2;
 	static const int timeOutDelay = 30;
 	static const int thresh0 = 1700;
-	static const int thresh1 = 2000;
-	static const int thresh2 = 2300;
+	static const int thresh1 = 2050;
+	static const int thresh11 = 2100;
+	static const int thresh2 = 2350;
+	static const int thresh21 = 2400;
 	static const int thresh3 = 2600;
 	static const int thresh4 = 3800;
 };
