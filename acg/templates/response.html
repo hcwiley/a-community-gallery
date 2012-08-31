@@ -1,0 +1,15 @@
+{% extends base_template|default:"base.html" %}
+{% block title %}
+Art72
+{% endblock %}
+{% block center %}
+{% autoescape off %}<div class='top'>{{ html }}{% endautoescape %}
+<div class='next-step'>
+    <h4>Want to see all the work in the gallery?</h4>
+    <br>
+    <a href='/gallery'><h2>yes</h2></a>
+	<br>
+	<br>
+</div>
+</div>
+{% endblock %}

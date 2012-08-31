@@ -1,0 +1,27 @@
+{% extends base_template|default:"base.html" %}
+{% block title %}
+A Community Gallery | About
+{% endblock %}
+{% block center %}
+<div class='top'>
+    <h3>What's going on here?</h3>
+    <br>
+	<p>
+		This is a long term group performance piece. I am instigating rapid consuming and sharing of art in a public space. Anyone can come to the <a href='/'>website</a> and upload their artwork. All of the works will then be displayed in virtual gallery on the St Joe Loft's gallery TV. Using the software and interface I created anyone will be able to walk up to the TV and start moving through the art and examining individual works with simple gestures.
+	</p>
+	<br>
+	<h7>Would you like to put some art in the gallery?</h7>
+    <a href='/upload'><h4>yes</h4></a>
+	<br>
+    <hr>
+	<br>
+	<br>
+    <iframe width="640" height="360" src="http://www.youtube.com/embed/P4_rUViplSY?rel=0" frameborder="0" allowfullscreen></iframe>
+    <div class='next-step'>
+        <h4>Want to see all the work in the gallery?</h4>
+        <br>
+        <a href='/gallery'><h2>yes</h2></a>
+    </div>
+	<br>
+</div>
+{% endblock %}

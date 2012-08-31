@@ -1,0 +1,4 @@
+Django==1.3
+gondor==1.0b1.post14
+psycopg2==2.4.1
+PIL==1.1.7

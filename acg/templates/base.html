@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+        <meta name='description' content='Website for viewing and uploading to the Community Gallery installation' />
+        <meta name='keywords' content='cms, artist, website, template, content, management, art72, art, easy, gallery,' />
+        <link type='text/css' rel='stylesheet' href='{{ STATIC_URL }}css/styles.css'/>
+        <!--<link type='text/css' rel='stylesheet' href='{{ STATIC_URL }}css/ie.css'/>!-->
+        <link type='image/x-icon' rel="icon" href='{{ STATIC_URL }}images/fav.ico' />
+        <title>{% block title %}{% endblock %}</title>
+        {% include "scripts.html" %}
+    </head>
+    <body>
+    	{% block background-image %}
+		{% endblock %}
+        <div id='container'>
+            {% include "header.html" %}
+            <div id='wrapper'>
+                <div id='main'>
+                    {% block center %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        {% include 'footer.html' %}
+    </body>
+</html>

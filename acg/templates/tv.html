@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+        <meta name='description' content='Website for viewing and uploading to the Community Gallery installation' />
+        <meta name='keywords' content='cms, artist, website, template, content, management, art72, art, easy, gallery,' />
+        <link type='text/css' rel='stylesheet' href='{{ STATIC_URL }}css/styles.css'/>
+        <link type='text/css' rel='stylesheet' href='{{ STATIC_URL }}css/tv.css'/>
+        <!--<link type='text/css' rel='stylesheet' href='{{ STATIC_URL }}css/ie.css'/>!-->
+        <link type='image/x-icon' rel="icon" href='{{ STATIC_URL }}images/fav.ico' />
+        <title>A Community Gallery</title>
+        <script type="text/javascript" src="http://use.typekit.com/glf7kxu.js">
+        </script>
+        <script type="text/javascript">
+            try {
+                Typekit.load();
+            } 
+            catch (e) {
+            }
+        </script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/tv.js">
+        </script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/modernizr.js">
+        </script>
+    </head>
+    <body>
+        <div id='container'>
+            <div class='top'>
+                <h1>A Community Gallery</h1>
+                <h5>installation by<h3> H. Cole Wiley</h3></h5>
+                <br/>
+                <br/>
+                <br/>
+                <h4>gallery.art72.org</h4>
+            </div>
+            <div class='space'>
+            </div>
+            <div class='middle'>
+                <p>
+                    This is a long term group performance piece. I am instigating rapid consuming and sharing of art in a public space. Anyone can come to <a href='/'>gallery.art72.org</a>
+                    and upload their artwork. All of the works will then be displayed in virtual gallery on the St Joe Loft's gallery TV. Using the software and interface I created anyone will be able to walk up to the TV and start moving through the art and examining individual works with simple gestures.
+                </p>
+            </div>
+            <div class='space'>
+            </div>
+            <div class='gallery'>
+                {% for piece in pieces %}
+                <div>
+                    <div class='img'>
+                        <img src='{{ piece.default_image.thumb }}' title="Click to enlarge" />
+                    </div>
+                    <div>
+                        <p class='title'>
+                            {{ piece.title }} <span class='year'>({{ piece.year }})</span>
+                            <br>
+                            <span class='artist'><span style='font-variant: small-caps;'>by:</span> {{ piece.name }}</span>
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <br/>
+            <div style='display: block; clear:both; text-align: center;'>
+			    <br/>
+                <h3>Add your work to  gallery at:</h3>
+                <h4 style='color: #a8cb1e;'>gallery.art72.org</h4>
+            </div>
+        </div>
+    </body>
+</html>

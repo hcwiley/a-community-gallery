@@ -1,0 +1,55 @@
+{% extends base_template|default:"base.html" %}
+{% block title %}
+A Community Gallery
+{% endblock %}
+{% block background-image %}
+<div id='bg'>
+    <!--<img id='painter' class='cur' src='{{ STATIC_URL }}images/bg-painter.jpg' />!-->
+</div>{% endblock %}
+{% block center %}
+<div class='top'>
+    <h3>We are creating a community gallery</h3>
+    <br>
+    <hr>
+    <h3>Would you like to put some art in the gallery?</h3>
+    <h2 id='yes'>yes</h2>
+    <div class='next-step'>
+        <a href='/about'><h4>What's this all about?</h4></a>
+    </div>
+</div>
+<div class='upload'>
+    <h3>Upload your art work with the information below</h3>
+	<p style='font-variant: small-caps;'>* all fields required *</p>
+    <br>
+    <div id='piece-form'>
+        <form name='piece_form' enctype='multipart/form-data' method='post' action='/add-work' id='work-form'>
+            {% csrf_token %}
+            <p>
+                Title of the work
+            </p>
+            {{ piece_form.title }}
+            <p>
+                Your name
+            </p>
+            {{ piece_form.name }}
+            <p>
+                Image
+            </p>
+            {{ piece_form.default_image }}
+            <p>
+                Description / Artist Statement / Rationale
+            </p>
+            {{ piece_form.description }}
+            <p>
+                Year
+            </p>
+            {{ piece_form.year }}
+            <p>
+                Materials
+            </p>
+            {{ piece_form.materials }}
+            <br>
+			<h4 id='submit'>I want to submit this work of art to the Community Gallery</h4>
+        </form>
+    </div>
+</div>{% endblock %}

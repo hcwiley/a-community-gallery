@@ -1,0 +1,11 @@
+{% for piece in pieces %}
+{% if IS_DEV %}http://blu-wired:8000{% else %}http://gallery.art72.org{% endif %}/site_media/media/{{ piece.default_image }}
+{% autoescape off %}
+{{ piece.title }}
+{{ piece.name }}
+{{ piece.year }}
+{{ piece.materials }}
+{{ piece.description }}
+{% endautoescape %}
+<<<EOF>>>
+{% endfor %}

@@ -1,0 +1,95 @@
+body{
+	overflow: hidden;
+}
+#header, #pop-out{
+	display: none;
+}
+footer{
+	display: none;
+}
+
+#container{
+	position: relative;
+	overflow: hidden;
+}
+
+div.top{
+	margin: auto auto;
+	text-align: right;
+	width: 420px;
+}
+
+div.top h1{
+	text-align: left;
+	margin-bottom: 30px;
+}
+
+div.top h3{
+	color: #a8cb1e;
+}
+
+div.space{
+	height: 1200px;
+}
+
+div.gallery{
+	width: 1200px;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+div.gallery > div{
+	z-index: 100;
+	display: inline-block;
+	width: 300px;
+	height: 380px;
+	margin: 0px 15px;
+	float: left;
+	position: relative;
+}
+div.gallery > div > div{
+    display: block;
+	float: none;
+    clear: both;
+}
+
+div.middle{
+	text-align: justify;
+}
+
+div.img{
+	margin-bottom: 20px;
+	position: relative;
+	top: 0px;
+	float: none;
+	clear: both;
+}
+
+div.img > img{
+	position: relative;
+}
+
+p.title{
+	font-size: 20px;
+}
+p.artist{
+	font-size: 18px;
+}
+
+p{
+	font-size: 16px;
+}
+
+h1{
+	font-size: 80px;
+}
+
+h4{
+	font-size: 25px;
+}
+
+h5{
+	margin: 10px;
+	font-size: 16px;
+}

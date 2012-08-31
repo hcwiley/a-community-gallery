@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /get/
+Disallow: /submit-contact-form

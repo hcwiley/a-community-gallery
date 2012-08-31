@@ -1,0 +1,39 @@
+{% extends base_template|default:"base.html" %}
+{% block title %}
+A Community Gallery | Gallery
+{% endblock %}
+{% block center %}
+<div id='big-img'>
+    <img title='Click to Close'/>
+    <div class='foot'>
+    </div>
+</div>
+<div class='top'>
+    {% for piece in pieces %}
+    <div class='piece'>
+        <div class='img'>
+            <img src='{{ piece.default_image.thumb }}' title="Click to enlarge" />
+        </div>
+        <div class='info'>
+            <p class='title'>
+                {{ piece.title }} <span class='year'>({{ piece.year }})</span>
+                <br>
+                <span class='artist'><span style='font-variant: small-caps;'>by:</span> {{ piece.name }}</span>
+            </p>
+            <p class='materials'>
+                {{ piece.materials }}
+            </p>
+            <p class='description'>
+                {{ piece.description }}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class='next-step'>
+    <h3>Would you like to put some art in the gallery?</h3>
+    <br>
+    <a href='/upload'><h2>yes</h2></a>
+	<br>
+	<br>
+</div>{% endblock %}
